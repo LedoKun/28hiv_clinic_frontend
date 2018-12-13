@@ -79,7 +79,7 @@
             >
               <a
                 class="button is-small is-info is-outlined"
-                @click="performLogoutAction()"
+                @click="logout()"
                 >
                 <span class="icon">
                     <b-icon
@@ -124,8 +124,17 @@ export default {
     },
     methods: {
       ...mapActions('Auth', [
-        'performLogoutAction'
+        'performLogoutAction',
+        'performLogoutRefreshAction'
       ]),
+      logout() {
+        let self = this
+
+        self.performLogoutAction()
+          .then(() => {
+            self.performLogoutRefreshAction()
+          })
+      },
       toggleBurgerMenu () {
           // The following code is based off a toggle menu by @Bradcomp
           // source: https://gist.github.com/Bradcomp/a9ef2ef322a8e8017443b626208999c1

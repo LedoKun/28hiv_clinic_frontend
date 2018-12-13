@@ -17,6 +17,9 @@
             <a href="http://flask.pocoo.org">
                 <img src="../../assets/flask-logo.png" alt="Made with Flask" class="logo">
             </a>
+            <a href="https://www.postgresql.org">
+                <img src="../../assets/postgres-logo.png" alt="Made with PostgreSQL" class="logo">
+            </a>
             <a href="https://www.docker.com">
                 <img src="../../assets/docker-logo.png" alt="Served with Docker" class="logo">
             </a>
@@ -25,6 +28,9 @@
             </a>
             <a href="http://nginx.org">
                 <img src="../../assets/nginx-logo.png" alt="Served with Nginx" class="logo">
+            </a>
+            <a href="https://www.raspberrypi.org/">
+                <img src="../../assets/rpi-logo.png" alt="Served with Raspberry Pi. Raspberry Pi is a trademark of the Raspberry Pi Foundation." class="logo">
             </a>
         </div>
     </div>

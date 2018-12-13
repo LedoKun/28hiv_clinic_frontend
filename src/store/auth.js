@@ -1,7 +1,7 @@
 import instance from '@/utils/http'
 
 let state = {
-    isLoggedin: !!sessionStorage.getItem('jwt_token')
+    isLoggedin: !!(localStorage.getItem('jwt_token') && localStorage.getItem('jwt_refresh_token'))
 }
 
 let mutations = {
@@ -25,7 +25,21 @@ let actions = {
         })
             .then(() => {
                 context.commit('logout')
-                sessionStorage.removeItem('jwt_token')
+                localStorage.removeItem('jwt_token')
+            })
+    },
+    performLogoutRefreshAction  (context) {
+        if (!state.isLoggedin) {
+            return
+        }
+
+        return instance({
+            url: 'auth/logout_refresh',
+            method: 'post'
+        })
+            .then(() => {
+                context.commit('logout')
+                localStorage.removeItem('jwt_refresh_token')
             })
     },
     performLoginAction  (context, credential) {
@@ -42,7 +56,12 @@ let actions = {
                 let payload = response.data
 
                 if (payload && payload.access_token) {
-                    sessionStorage.setItem('jwt_token', payload.access_token)
+                    localStorage.setItem('jwt_token', payload.access_token)
+                    context.commit('login')
+                }
+
+                if (payload && payload.refresh_token) {
+                    localStorage.setItem('jwt_refresh_token', payload.refresh_token)
                     context.commit('login')
                 }
             })
