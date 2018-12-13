@@ -61,6 +61,9 @@
                                     TB Results
                                 </td>
                                 <td class="row-header">
+                                    HIV Resistence
+                                </td>
+                                <td class="row-header">
                                 </td>
                             </tr>
                             <tr
@@ -83,6 +86,7 @@
                                 <td>{{ item.ppd ? item.ppd : "" }}</td>
                                 <td>{{ item.cxr ? item.cxr : "" }}</td>
                                 <td>{{ item.tb ? item.tb : "" }}</td>
+                                <td>{{ item.hivResistence ? item.hivResistence : "" }}</td>
                                 <td><a class="button is-danger is-small is-pulled-right" @click="deleteKey(item.id)">Delete</a></td>
                             </tr>
                         </tbody>

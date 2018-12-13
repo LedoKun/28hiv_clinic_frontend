@@ -1,4 +1,5 @@
 import instance from '@/utils/http'
+import urlEncode from '@/utils/urlEncode'
 import { getField, updateField } from 'vuex-map-fields'
 let _ = require('lodash')
 
@@ -42,7 +43,7 @@ let actions = {
             return
         }
 
-        let relativeURL = 'patient/' + encodeURIComponent(hn) + '/appointment'
+        let relativeURL = 'patient/' + urlEncode(hn) + '/appointment'
 
         return instance({
             url: relativeURL,
@@ -65,7 +66,7 @@ let actions = {
         }
 
         return instance({
-            url: 'patient/' + encodeURIComponent(hn) + '/appointment',
+            url: 'patient/' + urlEncode(hn) + '/appointment',
             method: 'put',
             data: state.data
         })
@@ -79,9 +80,9 @@ let actions = {
 
         let relativeURL = (
             'patient/'
-            + encodeURIComponent(hn)
+            + urlEncode(hn)
             + '/appointment/'
-            + encodeURIComponent(id)
+            + urlEncode(id)
         )
 
         return instance({

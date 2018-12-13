@@ -58,7 +58,7 @@ export default {
                 url: 'search/patient',
                 method: 'get',
                 params: {
-                    keyword: self.keyword
+                    keyword: String(self.keyword).replace(/\//g, "_")
                 }
             })
                 .then(({ data }) => {
