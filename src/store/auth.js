@@ -14,6 +14,12 @@ let mutations = {
 }
 
 let actions = {
+    setLoggedOut (context) {
+        localStorage.removeItem('jwt_refresh_token')
+        localStorage.removeItem('jwt_token')
+
+        context.commit('logout')
+    },
     performLogoutAction  (context) {
         if (!state.isLoggedin) {
             return
@@ -21,25 +27,14 @@ let actions = {
 
         return instance({
             url: 'auth/logout',
-            method: 'post'
+            method: 'delete',
+            data: {
+                'jwt_token': localStorage.getItem('jwt_token'),
+                'jwt_refresh_token': localStorage.getItem('jwt_refresh_token')
+            }
         })
             .then(() => {
-                context.commit('logout')
-                localStorage.removeItem('jwt_token')
-            })
-    },
-    performLogoutRefreshAction  (context) {
-        if (!state.isLoggedin) {
-            return
-        }
-
-        return instance({
-            url: 'auth/logout_refresh',
-            method: 'post'
-        })
-            .then(() => {
-                context.commit('logout')
-                localStorage.removeItem('jwt_refresh_token')
+                context.dispatch('setLoggedOut')
             })
     },
     performLoginAction  (context, credential) {

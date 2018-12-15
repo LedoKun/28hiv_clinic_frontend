@@ -74,19 +74,19 @@
                                 <td>
                                     {{ $moment(item.date).isValid() ? $moment(item.date).format("DD/MM/YYYY") : "-" }}
                                 </td>
-                                <td>{{ item.antiHIV ? item.antiHIV : "" }}</td>
-                                <td>{{ item.cd4 ? item.cd4 : "" }}</td>
-                                <td>{{ item.pCD4 ? item.pCD4 : "" }}</td>
-                                <td>{{ item.vl ? item.vl : "" }}</td>
-                                <td>{{ item.vdrl ? item.vdrl : "" }}</td>
-                                <td>{{ item.rpr ? "1:" + item.rpr : "" }}</td>
-                                <td>{{ item.hbsag ? item.hbsag : "" }}</td>
-                                <td>{{ item.antiHBs ? item.antiHBs : "" }}</td>
-                                <td>{{ item.antiHCV ? item.antiHCV : "" }}</td>
-                                <td>{{ item.ppd ? item.ppd : "" }}</td>
-                                <td>{{ item.cxr ? item.cxr : "" }}</td>
-                                <td>{{ item.tb ? item.tb : "" }}</td>
-                                <td>{{ item.hivResistence ? item.hivResistence : "" }}</td>
+                                <td>{{ item.antiHIV }}</td>
+                                <td>{{ item.cd4 }}</td>
+                                <td>{{ item.pCD4 }}</td>
+                                <td>{{ item.vl }}</td>
+                                <td>{{ item.vdrl }}</td>
+                                <td>{{ item.rpr }}</td>
+                                <td>{{ item.hbsag }}</td>
+                                <td>{{ item.antiHBs  }}</td>
+                                <td>{{ item.antiHCV }}</td>
+                                <td>{{ item.ppd }}</td>
+                                <td>{{ item.cxr }}</td>
+                                <td>{{ item.tb }}</td>
+                                <td>{{ item.hivResistence }}</td>
                                 <td><a class="button is-danger is-small is-pulled-right" @click="deleteKey(item.id)">Delete</a></td>
                             </tr>
                         </tbody>

@@ -1,5 +1,9 @@
-import axios from 'axios'
+import store from '../store'
+
 let _ = require('lodash')
+let axios = require('axios')
+
+let apiURI = '/api'
 
 function formatDate(date) {
     let month = '' + (date.getMonth() + 1)
@@ -13,62 +17,79 @@ function formatDate(date) {
     return [year, month, day].join('-')
 }
 
-const instance = axios.create({
-    baseURL: '/api',
-    timeout: 10000,
-    params: {}, // do not remove this, its added to add params later in the config
-    data: {}
-})
-
-instance.interceptors.request.use(function (config) {
-    // Convert date object to isoString
-    _.forEach(config.data, function(value, key) {
+// Request interceptor 
+function requestSuccess(config) {
+    // Convert date objects to iso string
+    _.forEach(config.data, function (value, key) {
         if (value instanceof Date) {
             config.data[key] = formatDate(value)
         }
     })
 
+    // set auth header
     let token = localStorage.getItem('jwt_token')
 
     if (token) {
         config.headers.Authorization = `Bearer ${token}`
-    } else {
-        config.headers.Authorization = `Bearer ${localStorage.getItem('jwt_refresh_token')}`
     }
-    
+
     return config
+}
 
-}, function (error) {
-    // https://github.com/axios/axios/issues/1674
-    const originalRequest = error.config
-    let token = localStorage.getItem('jwt_refresh_token')
+function requestFailure(error) {
+    return Promise.reject(error)
+}
 
-    if (error.code != "ECONNABORTED" && error.response.status === 401 && token) {
-        if (!originalRequest._retry) {
-            originalRequest._retry = true
-            return axios ({
-                url: 'auth/token_refresh',
-                method: 'post',
+// Response interceptor
+function responseSuccess(response) {
+    return response
+}
+
+function responseFailure(error) {
+    let originalRequest = error.config
+
+    if ((error.response.status === 401 || error.response.status === 403) &&
+        (localStorage.getItem('jwt_refresh_token'))) {
+            let refresh_token = localStorage.getItem('jwt_refresh_token')
+
+            axios({
+                url: `${apiURI}/auth/token_refresh`,
+                methos: 'post',
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    'Authorization': `Bearer  ${refresh_token}`
                 }
             })
-              .then(response => {
-                let payload = response.data
+                .then((response) => {
+                    let payload = response.data
 
-                if (payload && payload.access_token) {
-                    localStorage.setItem('jwt_token', payload.access_token)
-                }
-                return instance(originalRequest)
-              })
-            } else {
-                localStorage.removeItem("jwt_token")
-                localStorage.removeItem("jwt_refresh_token")
-            }
+                    if (payload && payload.access_token) {
+                        localStorage.setItem('jwt_token', payload.access_token)
+                    }
+
+                    return axios(originalRequest)
+                })
+                .catch(() => {
+                    store.dispatch('Auth/setLoggedOut')
+                })
     }
 
-    // Do something with request error
     return Promise.reject(error)
+}
+
+// create common instance for API
+const instance = axios.create({
+    baseURL: apiURI,
+    timeout: 10000
 })
+
+instance.interceptors.request.use(
+    (config) => requestSuccess(config),
+    (error) => requestFailure(error)
+)
+
+instance.interceptors.response.use(
+    (response) => responseSuccess(response),
+    (error) => responseFailure(error)
+)
 
 export default instance

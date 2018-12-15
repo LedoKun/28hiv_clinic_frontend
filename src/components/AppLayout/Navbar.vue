@@ -124,16 +124,10 @@ export default {
     },
     methods: {
       ...mapActions('Auth', [
-        'performLogoutAction',
-        'performLogoutRefreshAction'
+        'performLogoutAction'
       ]),
       logout() {
-        let self = this
-
-        self.performLogoutAction()
-          .then(() => {
-            self.performLogoutRefreshAction()
-          })
+        this.performLogoutAction()
       },
       toggleBurgerMenu () {
           // The following code is based off a toggle menu by @Bradcomp
