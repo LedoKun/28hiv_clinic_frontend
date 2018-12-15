@@ -54,7 +54,7 @@ function responseFailure(error) {
 
             axios({
                 url: `${apiURI}/auth/token_refresh`,
-                methos: 'post',
+                methods: 'post',
                 headers: {
                     'Authorization': `Bearer  ${refresh_token}`
                 }
