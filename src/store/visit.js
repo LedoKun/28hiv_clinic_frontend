@@ -52,7 +52,7 @@ let actions = {
             return
         }
 
-        let relativeURL = 'patient/' + urlEncode(hn) + '/visit'
+        let relativeURL = '/api/patient/' + urlEncode(hn) + '/visit'
 
         return instance({
             url: relativeURL,
@@ -75,7 +75,7 @@ let actions = {
         }
 
         return instance({
-            url: 'patient/' + urlEncode(hn) + '/visit',
+            url: '/api/patient/' + urlEncode(hn) + '/visit',
             method: 'put',
             data: state.data
         })
@@ -88,7 +88,7 @@ let actions = {
         }
 
         let relativeURL = (
-            'patient/'
+            '/api/patient/'
             + urlEncode(hn)
             + '/visit/'
             + urlEncode(id)

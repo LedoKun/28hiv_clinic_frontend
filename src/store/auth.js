@@ -26,7 +26,7 @@ let actions = {
         }
 
         return instance({
-            url: 'auth/logout',
+            url: '/api/auth/logout',
             method: 'delete',
             data: {
                 'jwt_token': localStorage.getItem('jwt_token'),
@@ -43,7 +43,7 @@ let actions = {
         }
 
         return instance({
-            url: 'auth/login',
+            url: '/api/auth/login',
             method: 'post',
             data: credential
         })
@@ -67,7 +67,7 @@ let actions = {
         }
 
         return instance({
-            url: 'auth/create_user',
+            url: '/api/auth/create_user',
             method: 'post',
             data: credential
         })

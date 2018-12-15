@@ -351,7 +351,7 @@ export default {
             let self = this
 
             instance({
-                url: 'search/icd10',
+                url: '/api/search/icd10',
                 method: 'get',
                 params: {
                     keyword: keyword

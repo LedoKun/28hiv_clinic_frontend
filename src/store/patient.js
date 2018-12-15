@@ -57,7 +57,7 @@ let actions = {
     },
     submitAction (context) {
         return instance({
-            url: 'patient',
+            url: '/api/patient',
             method: 'put',
             data: state.data
         })
@@ -66,7 +66,7 @@ let actions = {
         })
     },
     deleteAction() {
-        let relativeURL = 'patient/' + urlEncode(state.data.hn)
+        let relativeURL = '/api/patient/' + urlEncode(state.data.hn)
 
         return instance({
             url: relativeURL,
@@ -74,7 +74,7 @@ let actions = {
         })
     },
     loadAction(context, hn) {
-        let relativeURL = 'patient/' + urlEncode(hn)
+        let relativeURL = '/api/patient/' + urlEncode(hn)
 
         return instance({
             url: relativeURL,

@@ -134,7 +134,7 @@ export default {
             self.loading = true
 
             instance({
-                url: 'data/all_patients',
+                url: '/api/data/all_patients',
                 method: 'get',
                 params: {
                     page_number: self.page

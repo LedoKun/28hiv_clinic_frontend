@@ -1,9 +1,10 @@
 import store from '../store'
+import { Toast } from 'buefy/dist/components/toast'
 
 let _ = require('lodash')
 let axios = require('axios')
 
-let apiURI = '/api'
+let apiBaseURL = '/api'
 
 function formatDate(date) {
     let month = '' + (date.getMonth() + 1)
@@ -45,40 +46,64 @@ function responseSuccess(response) {
     return response
 }
 
-function responseFailure(error) {
+async function responseFailure(error) {
     let originalRequest = error.config
 
     if ((error.response.status === 401 || error.response.status === 403) &&
         (localStorage.getItem('jwt_refresh_token'))) {
-            let refresh_token = localStorage.getItem('jwt_refresh_token')
+        let refresh_token = localStorage.getItem('jwt_refresh_token')
 
-            axios({
-                url: `${apiURI}/auth/token_refresh`,
+        try {
+            let response = await axios({
+                url: `${apiBaseURL}/auth/token_refresh`,
                 method: 'post',
                 headers: {
-                    'Authorization': `Bearer  ${refresh_token}`
+                    'Authorization': `Bearer ${refresh_token}`
                 }
             })
-                .then((response) => {
-                    let payload = response.data
 
-                    if (payload && payload.access_token) {
-                        localStorage.setItem('jwt_token', payload.access_token)
-                    }
+            if (response.data.access_token) {
+                localStorage.setItem('jwt_token', response.data.access_token)
 
-                    return axios(originalRequest)
-                })
-                .catch(() => {
-                    store.dispatch('Auth/setLoggedOut')
-                })
+                // Use the new access token
+                originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`
+            }
+
+            return axios(originalRequest)
+        } catch (error) {
+            store.dispatch('Auth/setLoggedOut')
+
+            // Disply error toast
+            Toast.open({
+                message: 'กรุณาเข้าสูระบบอีกครั้ง',
+                type: 'is-danger',
+                position: 'is-bottom'
+            })
+        
+            return Promise.reject(error)
+        }
+    } else {
+        let msg = null
+
+        if (error.response.data) {
+            msg = `${error.response.data.name}: ${error.response.data.description}`
+        } else {
+            msg = 'Unexpected Error.'
+        }
+
+        // Disply error toast
+        Toast.open({
+            message: msg,
+            type: 'is-danger',
+            position: 'is-bottom'
+        })
+
+        return Promise.reject(error)
     }
-
-    return Promise.reject(error)
 }
 
 // create common instance for API
 const instance = axios.create({
-    baseURL: apiURI,
     timeout: 10000
 })
 

@@ -80,7 +80,7 @@ export default {
         }
 
         instance({
-            url: 'patient/dashboard',
+            url: '/api/patient/dashboard',
             method: 'get',
             params: {
                 date: today

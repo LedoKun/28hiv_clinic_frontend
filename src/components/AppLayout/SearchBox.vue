@@ -45,43 +45,30 @@ export default {
         // patientSearchBox.classList.add('is-small')
     },
     methods: {
-        fetchData() {
-            if(!this.keyword.length) {
-                this.data = []
+        async fetchData() {
+            let self = this
+            if(!self.keyword.length) {
+                self.data = []
                 return
             }
-
-            let self = this
+            
             self.isFetching = true
 
-            instance({
-                url: 'search/patient',
-                method: 'get',
-                params: {
-                    keyword: String(self.keyword).replace(/\//g, "_")
-                }
-            })
-                .then(({ data }) => {
-                    self.data = data
+            try {
+                let response = await instance({
+                    url: '/api/search/patient',
+                    method: 'get',
+                    params: {
+                        keyword: String(self.keyword).replace(/\//g, "_")
+                    }
                 })
-                .catch((error) => {
-                    self.data = []
-                    let message = error.response.data.name ? (
-                        error.response.data.name
-                        + ' (' + error.response.data.statusCode + ') : '
-                        + error.response.data.description
-                    ) : 'Unexpected Error!'
 
-                    self.$toast.open({
-                        message: message,
-                        type: 'is-danger',
-                        position: 'is-bottom',
-                        duration: 5000
-                    })
-                })
-                .finally(() => {
-                    self.isFetching = false
-                })
+                self.data = response.data
+            } catch {
+                self.data = []
+            } finally {
+                self.isFetching = false
+            }
         },
         selected(hn) {
             this.$router.push({ name: 'patient', params: { urlHN: hn }})
