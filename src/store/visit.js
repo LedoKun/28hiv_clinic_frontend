@@ -1,6 +1,7 @@
 import instance from '@/utils/http'
 import urlEncode from '@/utils/urlEncode'
 import { getField, updateField } from 'vuex-map-fields'
+import Moment from 'moment'
 let _ = require('lodash')
 
 let initialState = {
@@ -36,7 +37,8 @@ let mutations = {
     },
     loadData(state, payload) {
         // Change date to date object
-        payload.date = new Date(payload.date)
+        let dateData = Moment(payload.date)
+        payload.date = dateData.isValid ? dateData.toDate() : null
         state.previousVisits = payload
     }
 }
@@ -45,27 +47,30 @@ let actions = {
     setDefaultAction (context) {
         context.commit('setDefault')
     },
-    loadAction(context) {
+    async loadAction(context) {
         let hn = context.rootState.Patient.data.hn
 
         if(!hn) {
             return
         }
 
-        let relativeURL = '/api/patient/' + urlEncode(hn) + '/visit'
-
-        return instance({
-            url: relativeURL,
-            method: 'get'
-        })
-            .then((response) => {
-                let payload = response.data
-
-                if (Object.getOwnPropertyNames(payload).length > 0) {
-                    context.commit('loadData', payload)
-                }                
+        try {
+            let relativeURL = '/api/patient/' + urlEncode(hn) + '/visit'
+            let response = await instance({
+                url: relativeURL,
+                method: 'get'
             })
+            
+            let payload = response.data
 
+            if (Object.getOwnPropertyNames(payload).length > 0) {
+                context.commit('loadData', payload)
+            }
+
+            return Promise.resolve(response)
+        } catch (error) {
+            return Promise.reject(error)
+        }
     },
     submitAction (context) {
         let hn = context.rootState.Patient.data.hn

@@ -20,6 +20,9 @@ function formatDate(date) {
 
 // Request interceptor 
 function requestSuccess(config) {
+    // Do not modify the original object
+    config.data = _.cloneDeep(config.data)
+
     // Convert date objects to iso string
     _.forEach(config.data, function (value, key) {
         if (value instanceof Date) {
@@ -77,7 +80,8 @@ async function responseFailure(error) {
             Toast.open({
                 message: 'กรุณาเข้าสูระบบอีกครั้ง',
                 type: 'is-danger',
-                position: 'is-bottom'
+                position: 'is-bottom',
+                duration: 8000
             })
         
             return Promise.reject(error)
@@ -85,8 +89,13 @@ async function responseFailure(error) {
     } else {
         let msg = null
 
-        if (error.response.data) {
+        if (
+            error.response.data.name &&
+            error.response.data.description
+        ) {
             msg = `${error.response.data.name}: ${error.response.data.description}`
+        } else if (error.response.data.message) {
+            msg = `Error: ${error.response.data.message}`
         } else {
             msg = 'Unexpected Error.'
         }
@@ -95,7 +104,8 @@ async function responseFailure(error) {
         Toast.open({
             message: msg,
             type: 'is-danger',
-            position: 'is-bottom'
+            position: 'is-bottom',
+            duration: 8000
         })
 
         return Promise.reject(error)

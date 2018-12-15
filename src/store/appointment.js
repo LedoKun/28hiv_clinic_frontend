@@ -36,7 +36,7 @@ let actions = {
     setDefaultAction (context) {
         context.commit('setDefault')
     },
-    loadAction(context) {
+    async loadAction(context) {
         let hn = context.rootState.Patient.data.hn
 
         if(!hn) {
@@ -45,18 +45,22 @@ let actions = {
 
         let relativeURL = '/api/patient/' + urlEncode(hn) + '/appointment'
 
-        return instance({
-            url: relativeURL,
-            method: 'get'
-        })
-            .then((response) => {
-                let payload = response.data
-
-                if (Object.getOwnPropertyNames(payload).length > 0) {
-                    context.commit('loadData', payload)
-                }                
+        try {
+            let response = await instance({
+                url: relativeURL,
+                method: 'get'
             })
 
+            let payload = response.data
+
+            if (Object.getOwnPropertyNames(payload).length > 0) {
+                context.commit('loadData', payload)
+            }
+
+            return Promise.resolve(response)
+        } catch (error) {
+            return Promise.reject(error)
+        }
     },
     submitAction (context) {
         let hn = context.rootState.Patient.data.hn

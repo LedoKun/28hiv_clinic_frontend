@@ -20,46 +20,56 @@ let actions = {
 
         context.commit('logout')
     },
-    performLogoutAction  (context) {
+    async performLogoutAction  (context) {
         if (!state.isLoggedin) {
             return
         }
 
-        return instance({
-            url: '/api/auth/logout',
-            method: 'delete',
-            data: {
-                'jwt_token': localStorage.getItem('jwt_token'),
-                'jwt_refresh_token': localStorage.getItem('jwt_refresh_token')
-            }
-        })
-            .then(() => {
-                context.dispatch('setLoggedOut')
+        try {
+            let response = await instance({
+                url: '/api/auth/logout',
+                method: 'delete',
+                data: {
+                    'jwt_token': localStorage.getItem('jwt_token'),
+                    'jwt_refresh_token': localStorage.getItem('jwt_refresh_token')
+                }
             })
+
+            context.dispatch('setLoggedOut')
+
+            return Promise.resolve(response)
+        } catch (error) {
+            return Promise.reject(error)
+        }
     },
-    performLoginAction  (context, credential) {
+    async performLoginAction  (context, credential) {
         if (!credential) {
             return
         }
 
-        return instance({
-            url: '/api/auth/login',
-            method: 'post',
-            data: credential
-        })
-            .then((response) => {
-                let payload = response.data
-
-                if (payload && payload.access_token) {
-                    localStorage.setItem('jwt_token', payload.access_token)
-                    context.commit('login')
-                }
-
-                if (payload && payload.refresh_token) {
-                    localStorage.setItem('jwt_refresh_token', payload.refresh_token)
-                    context.commit('login')
-                }
+        try {
+            let response = await instance({
+                url: '/api/auth/login',
+                method: 'post',
+                data: credential
             })
+
+            let payload = response.data
+
+            if (payload && payload.access_token) {
+                localStorage.setItem('jwt_token', payload.access_token)
+                context.commit('login')
+            }
+
+            if (payload && payload.refresh_token) {
+                localStorage.setItem('jwt_refresh_token', payload.refresh_token)
+                context.commit('login')
+            }
+
+            return Promise.resolve(response)
+        } catch (error) {
+            return Promise.reject(error)
+        }
     },
     createUserAction  (credential) {
         if (!credential) {

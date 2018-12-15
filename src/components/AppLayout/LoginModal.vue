@@ -43,35 +43,25 @@ export default {
         ...mapActions('Auth', [
             'performLoginAction'
         ]),
-        performLogin () {
+        async performLogin () {
             let self = this
-            this.performLoginAction({
-                username: self.username,
-                password: self.password
-            })
-                .then(() => {
-                    self.$toast.open({
-                        message: 'เข้าสู่ระบบแล้ว',
-                        type: 'is-success',
-                        position: 'is-bottom'
-                    })
 
-                    self.$parent.close()
+            try {
+                await self.performLoginAction({
+                    username: self.username,
+                    password: self.password
                 })
-                .catch((error) => {
-                    let message = error.response.data.name ? (
-                        error.response.data.name
-                        + ' (' + error.response.data.statusCode + ') : '
-                        + error.response.data.description
-                    ) : 'Unexpected Error!'
 
-                    self.$toast.open({
-                        message: message,
-                        type: 'is-danger',
-                        position: 'is-bottom',
-                        duration: 5000
-                    })
+                self.$toast.open({
+                    message: 'เข้าสู่ระบบแล้ว',
+                    type: 'is-success',
+                    position: 'is-bottom'
                 })
+
+                self.$parent.close()
+            } catch (error) {
+                // error
+            }
         }
     },
     mounted: function () {

@@ -70,7 +70,7 @@ export default {
         this.patientExamined = []
         this.countPatient = '-'
       },
-      fetchData () {
+      async fetchData () {
         let self = this
         let today = self.$moment().format('YYYY-MM-DD')
         self.setDefault()
@@ -79,55 +79,42 @@ export default {
             return
         }
 
-        instance({
-            url: '/api/patient/dashboard',
-            method: 'get',
-            params: {
-                date: today
-            }
-        })
-            .then((response) => {
-                let payload = response.data
-
-                if (Object.getOwnPropertyNames(payload).length > 0) {
-                    // assign todayAppointment
-                    if (payload.todayAppointment && (Object.getOwnPropertyNames(payload.todayAppointment).length > 0)) {
-                        self.todayAppointment = payload.todayAppointment
-                    } else {
-                        self.todayAppointment = []
-                    }
-
-                    // assign patientExamined
-                    if (payload.patientExamined && (Object.getOwnPropertyNames(payload.patientExamined).length > 0)) {
-                        self.patientExamined = payload.patientExamined
-                    } else {
-                        self.patientExamined = []
-                    }
-
-                    if (payload.countPatient) {
-                        self.countPatient = payload.countPatient
-                    } else {
-                        self.countPatient = '-'
-                    }
-
+        try {
+            let response = await instance({
+                url: '/api/patient/dashboard',
+                method: 'get',
+                params: {
+                    date: today
                 }
             })
-            .catch((error) => {
-                self.setDefault()              
 
-                let message = error.response.data.name ? (
-                    error.response.data.name
-                    + ' (' + error.response.data.statusCode + ') : '
-                    + error.response.data.description
-                ) : 'Unexpected Error!'
+            let payload = response.data
 
-                self.$toast.open({
-                    message: message,
-                    type: 'is-danger',
-                    position: 'is-bottom',
-                    duration: 5000
-                })
-            })
+            if (Object.getOwnPropertyNames(payload).length > 0) {
+                // assign todayAppointment
+                if (payload.todayAppointment && (Object.getOwnPropertyNames(payload.todayAppointment).length > 0)) {
+                    self.todayAppointment = payload.todayAppointment
+                } else {
+                    self.todayAppointment = []
+                }
+
+                // assign patientExamined
+                if (payload.patientExamined && (Object.getOwnPropertyNames(payload.patientExamined).length > 0)) {
+                    self.patientExamined = payload.patientExamined
+                } else {
+                    self.patientExamined = []
+                }
+
+                if (payload.countPatient) {
+                    self.countPatient = payload.countPatient
+                } else {
+                    self.countPatient = '-'
+                }
+
+            }
+        } catch (error) {
+            // error
+        }
       }
   },
   data: function () {

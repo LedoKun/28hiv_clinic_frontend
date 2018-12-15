@@ -112,32 +112,15 @@ export default {
                 cancelText: 'Cancel',
                 type: 'is-danger',
                 hasIcon: true,
-                onConfirm: () => {
+                onConfirm: async () => {
 
-                    self.deleteAction(id)
-                        .then(() => {
-                            self.$toast.open({
-                                message: 'Visit Deleted!',
-                                type: 'is-success',
-                                position: 'is-bottom'
-                            })
+                    try {
+                        await self.deleteAction(id)
 
-                            self.loadAction()
-                        })
-                        .catch((error) => {
-                            let message = error.response.data.name ? (
-                                error.response.data.name
-                                + ' (' + error.response.data.statusCode + ') : '
-                                + error.response.data.description
-                            ) : 'Unexpected Error!'
-
-                            self.$toast.open({
-                                message: message,
-                                type: 'is-danger',
-                                position: 'is-bottom',
-                                duration: 5000
-                            })
-                        })
+                        self.loadAction()
+                    } catch (error) {
+                        // error
+                    }
 
                 }
             })

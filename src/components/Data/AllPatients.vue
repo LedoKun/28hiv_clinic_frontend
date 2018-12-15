@@ -128,41 +128,28 @@ export default {
                 }
             })
         },
-        fetchData() {
+        async fetchData() {
             let self = this
-
             self.loading = true
 
-            instance({
-                url: '/api/data/all_patients',
-                method: 'get',
-                params: {
-                    page_number: self.page
-                }
-            })
-                .then(({ data }) => {
-                    self.data = data.items
-                    self.total = data.total
-                    self.perPage = data.per_page
+            try {
+                let response = await instance({
+                    url: '/api/data/all_patients',
+                    method: 'get',
+                    params: {
+                        page_number: self.page
+                    }
                 })
-                .catch((error) => {
-                    self.data = []
-                    let message = error.response.data.name ? (
-                        error.response.data.name
-                        + ' (' + error.response.data.statusCode + ') : '
-                        + error.response.data.description
-                    ) : 'Unexpected Error!'
 
-                    self.$toast.open({
-                        message: message,
-                        type: 'is-danger',
-                        position: 'is-bottom',
-                        duration: 5000
-                    })
-                })
-                .finally(() => {
-                    self.loading = false
-                })
+                self.data = response.data.items
+                self.total = response.data.total
+                self.perPage = response.data.per_page
+
+            } catch (error) {
+                // error
+            } finally {
+                self.loading = false
+            }
         },
         onPageChange(page) {
             this.page = page

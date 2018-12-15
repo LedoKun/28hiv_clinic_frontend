@@ -34,7 +34,7 @@ Vue.use(Buefy, {
     "11 - พฤศจิกายน",
     "12 - ธันวาคม"
   ],
-  defaultToastDuration: 5000
+  defaultToastDuration: 8000
 })
 
 Vue.config.productionTip = true

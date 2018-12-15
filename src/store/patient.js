@@ -1,6 +1,7 @@
 import instance from '@/utils/http'
 import urlEncode from '@/utils/urlEncode'
 import { getField, updateField } from 'vuex-map-fields'
+import Moment from 'moment'
 let _ = require('lodash')
 
 let initialState = {
@@ -42,8 +43,8 @@ let mutations = {
     },
     loadData(state, payload) {
         // Change DOB to date object
-        payload.dob = new Date(payload.dob)
-
+        let dob = Moment(payload.dob)
+        payload.dob = dob.isValid ? dob.toDate() : null
         state.data = payload
     },
     setIsDataInBackend(state, payload) {
@@ -52,18 +53,24 @@ let mutations = {
 }
 
 let actions = {
-    setDefaultAction (context) {
+    setDefaultAction(context) {
         context.commit('setDefault')
     },
-    submitAction (context) {
-        return instance({
-            url: '/api/patient',
-            method: 'put',
-            data: state.data
-        })
-        .then(() => {
+    async submitAction(context) {
+        try {
+            let response = await instance({
+                url: '/api/patient',
+                method: 'put',
+                data: state.data
+            })
+
             context.commit('setIsDataInBackend', true)
-        })
+
+            return Promise.resolve(response)
+        } catch (error) {
+            // error
+            return Promise.reject(error)
+        }
     },
     deleteAction() {
         let relativeURL = '/api/patient/' + urlEncode(state.data.hn)
@@ -73,36 +80,41 @@ let actions = {
             method: 'delete'
         })
     },
-    loadAction(context, hn) {
+    async loadAction(context, hn) {
         let relativeURL = '/api/patient/' + urlEncode(hn)
 
-        return instance({
-            url: relativeURL,
-            method: 'get'
-        })
-            .then((response) => {
-                let payload = response.data
-
-                if (Object.getOwnPropertyNames(payload).length > 0) {
-                    // assign visit data
-                    if (payload.visits && (Object.getOwnPropertyNames(payload.visits).length > 0)) {
-                        context.commit('Visit/loadData', payload.visits, { root: true })
-                    }
-
-                    // assign investigation data
-                    if (payload.investigation && (Object.getOwnPropertyNames(payload.investigation).length > 0)) {
-                        context.commit('Investigation/loadData', payload.investigation, { root: true })
-                    }
-
-                    // assign appointment data
-                    if (payload.appointments && (Object.getOwnPropertyNames(payload.appointments).length > 0)) {
-                        context.commit('Appointment/loadData', payload.appointments, { root: true })
-                    }
-
-                    context.commit('loadData', payload)
-                    context.commit('setIsDataInBackend', true)
-                }
+        try {
+            let response = await instance({
+                url: relativeURL,
+                method: 'get'
             })
+
+            let payload = response.data
+
+            if (Object.getOwnPropertyNames(payload).length > 0) {
+                // assign visit data
+                if (payload.visits && (Object.getOwnPropertyNames(payload.visits).length > 0)) {
+                    context.commit('Visit/loadData', payload.visits, { root: true })
+                }
+
+                // assign investigation data
+                if (payload.investigation && (Object.getOwnPropertyNames(payload.investigation).length > 0)) {
+                    context.commit('Investigation/loadData', payload.investigation, { root: true })
+                }
+
+                // assign appointment data
+                if (payload.appointments && (Object.getOwnPropertyNames(payload.appointments).length > 0)) {
+                    context.commit('Appointment/loadData', payload.appointments, { root: true })
+                }
+
+                context.commit('loadData', payload)
+                context.commit('setIsDataInBackend', true)
+            }
+
+            return Promise.resolve(response)
+        } catch (error) {
+            return Promise.reject(error)
+        }
     }
 }
 
@@ -113,4 +125,3 @@ export default {
     mutations,
     actions
 }
- 

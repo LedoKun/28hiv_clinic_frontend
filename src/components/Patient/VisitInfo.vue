@@ -14,7 +14,7 @@
         <div class="content">
             <!-- form -->
             <form
-                @submit.prevent="validateData"
+                @submit.prevent="saveForm"
                 id="VisitInfoForm"
             >
                 <div class="columns">
@@ -253,7 +253,7 @@
         </a>
         <a
             class="card-footer-item"
-            @click="validateData"
+            @click="saveForm"
         >
             Save
         </a>
@@ -300,80 +300,57 @@ export default {
                 }
             })
         },
-        validateData () {
+        saveForm () {
             let self = this
-
-            this.$validator.validateAll().then((result) => {
+            self.$validator.validateAll().then(async (result) => {
                 if (result) {
-                    self.submitAction()
-                        .then(() => {
-                            self.$toast.open({
-                                message: 'Visit Data Saved!',
-                                type: 'is-success',
-                                position: 'is-bottom'
-                            })
+                    try {
+                        await self.submitAction()
 
-                            self.setDefaultAction()
-                            self.errors.clear()
-                            self.loadAction()
-                        })
-                        .catch((error) => {
-                            let message = error.response.data.name ? (
-                                error.response.data.name
-                                + ' (' + error.response.data.statusCode + ') : '
-                                + error.response.data.description
-                            ) : 'Unexpected Error!'
-
-                            self.$toast.open({
-                                message: message,
-                                type: 'is-danger',
-                                position: 'is-bottom',
-                                duration: 5000
-                            })
+                        self.$toast.open({
+                            message: 'Visit Data Saved!',
+                            type: 'is-success',
+                            position: 'is-bottom'
                         })
 
-                    return
+                        self.setDefaultAction()
+                        self.errors.clear()
+                        self.loadAction()
+                    } catch (error) {
+                        // error
+                    }
+                } else {
+                    self.$toast.open({
+                        message: 'กรุณาตรวจสอบข้อมูล',
+                        type: 'is-danger',
+                        position: 'is-bottom',
+                        duration: 5000
+                    })
                 }
-                
-                self.$toast.open({
-                    message: 'กรุณาตรวจสอบข้อมูล',
-                    type: 'is-danger',
-                    position: 'is-bottom',
-                    duration: 5000
-                })
             })
         },
-        getFilterICD10 (keyword) {
+        async getFilterICD10 (keyword) {
             if (String(keyword).length <= 0) {
                 return
             }
 
             let self = this
+            self.filteredICD10 = []
 
-            instance({
-                url: '/api/search/icd10',
-                method: 'get',
-                params: {
-                    keyword: keyword
-                }
-            })
-                .then((response) => {
-                    self.filteredICD10 = response.data
+            try {
+                let response = await instance({
+                    url: '/api/search/icd10',
+                    method: 'get',
+                    params: {
+                        keyword: keyword
+                    }
                 })
-                .catch((error) => {
-                    let message = error.response.data.name ? (
-                        error.response.data.name
-                        + ' (' + error.response.data.statusCode + ') : '
-                        + error.response.data.description
-                    ) : 'Unexpected Error!'
 
-                    self.$toast.open({
-                        message: message,
-                        type: 'is-danger',
-                        position: 'is-bottom',
-                        duration: 5000
-                    })
-                })
+                self.filteredICD10 = response.data
+            } catch (error) {
+                self.filteredICD10 = []
+            }
+
         },
         getFilterARV (text) {
             this.filteredARV = this.visitOption.arv.filter((option) => {

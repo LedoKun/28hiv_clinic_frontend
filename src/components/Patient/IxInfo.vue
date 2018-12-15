@@ -421,46 +421,35 @@ export default {
         },
         validateData () {
             let self = this
-
-            this.$validator.validateAll().then((result) => {
+            self.$validator.validateAll().then(async (result) => {
                 if (result) {
-                    self.submitAction()
-                        .then(() => {
-                            self.$toast.open({
-                                message: 'Investigation Result Saved!',
-                                type: 'is-success',
-                                position: 'is-bottom'
-                            })
+                    try {
+                        await self.submitAction()
 
-                            self.setDefaultAction()
-                            self.errors.clear()
-                            self.loadAction()
-                        })
-                        .catch((error) => {
-                            let message = error.response.data.name ? (
-                                error.response.data.name
-                                + ' (' + error.response.data.statusCode + ') : '
-                                + error.response.data.description
-                            ) : 'Unexpected Error!'
-
-                            self.$toast.open({
-                                message: message,
-                                type: 'is-danger',
-                                position: 'is-bottom',
-                                duration: 5000
-                            })
+                        self.$toast.open({
+                            message: 'Investigation Result Saved!',
+                            type: 'is-success',
+                            position: 'is-bottom'
                         })
 
-                    return
+                        self.setDefaultAction()
+                        self.errors.clear()
+                        self.loadAction()
+                    } catch (error) {
+                        // error
+                    }
+                } else {
+                    self.$toast.open({
+                        message: 'กรุณาตรวจสอบข้อมูล',
+                        type: 'is-danger',
+                        position: 'is-bottom',
+                        duration: 5000
+                    })
                 }
-                
-                self.$toast.open({
-                    message: 'กรุณาตรวจสอบข้อมูล',
-                    type: 'is-danger',
-                    position: 'is-bottom',
-                    duration: 5000
-                })
+            }).catch(() => {
+                // logic error
             })
+
         },
     },
     data: function () {

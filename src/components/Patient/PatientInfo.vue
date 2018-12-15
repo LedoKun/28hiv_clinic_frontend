@@ -12,7 +12,7 @@
     </div>
     <!-- form -->
     <form
-        @submit.prevent="validateData"
+        @submit.prevent="saveForm"
         id="PatientInfoForm"
     >
 
@@ -377,7 +377,7 @@
         </a>
         <a
             class="card-footer-item"
-            @click="validateData"
+            @click="saveForm"
         >
             บันทึกข้อมูล
         </a>
@@ -420,77 +420,52 @@ export default {
                 cancelText: 'ยกเลิก',
                 type: 'is-danger',
                 hasIcon: true,
-                onConfirm: () => {
+                onConfirm: async () => {
+                    try {
+                        await self.deleteAction()
 
-                    self.deleteAction()
-                        .then(() => {
-                            self.$toast.open({
-                                message: 'ลบผู้ป่วยออกจากระบบแล้ว',
-                                type: 'is-success',
-                                position: 'is-bottom'
-                            })
-
-                            self.setDefaultAction()
-                            self.errors.clear()
-                        })
-                        .catch((error) => {
-                            let message = error.response.data.name ? (
-                                error.response.data.name
-                                + ' (' + error.response.data.statusCode + ') : '
-                                + error.response.data.description
-                            ) : 'Unexpected Error!'
-
-                            self.$toast.open({
-                                message: message,
-                                type: 'is-danger',
-                                position: 'is-bottom',
-                                duration: 5000
-                            })
+                        self.$toast.open({
+                            message: 'ลบผู้ป่วยออกจากระบบแล้ว',
+                            type: 'is-success',
+                            position: 'is-bottom'
                         })
 
+                        self.setDefaultAction()
+                        self.errors.clear()
+                    } catch (error) {
+                        // error
+                    }
                 }
             })
         },
-        validateData () {
+        saveForm () {
             let self = this
-
-            this.$validator.validateAll().then((result) => {
+            self.$validator.validateAll().then(async (result) => {
                 if (result) {
-                    self.submitAction()
-                        .then(() => {
-                            self.$toast.open({
-                                message: 'Patient Data Saved!',
-                                type: 'is-success',
-                                position: 'is-bottom'
-                            })
+                    try {
+                        await self.submitAction()
 
-                            self.isDataInBackend = true
+                        self.$toast.open({
+                            message: 'Patient Data Saved!',
+                            type: 'is-success',
+                            position: 'is-bottom'
                         })
-                        .catch((error) => {
-                            let message = error.response.data.name ? (
-                                error.response.data.name
-                                + ' (' + error.response.data.statusCode + ') : '
-                                + error.response.data.description
-                            ) : 'Unexpected Error!'
-
-                            self.$toast.open({
-                                message: message,
-                                type: 'is-danger',
-                                position: 'is-bottom',
-                                duration: 5000
-                            })
-                        })
-
-                    return
+                        self.isDataInBackend = true
+                    } catch (error) {
+                        // error
+                    }
+                } else {
+                    self.$toast.open({
+                        message: 'กรุณาตรวจสอบข้อมูล',
+                        type: 'is-danger',
+                        position: 'is-bottom',
+                        duration: 5000
+                    })
                 }
-                
-                self.$toast.open({
-                    message: 'กรุณาตรวจสอบข้อมูล',
-                    type: 'is-danger',
-                    position: 'is-bottom',
-                    duration: 5000
-                })
+            }).catch(() => {
+                // something must have gone wrong
             })
+
         }
     },
     data: function () {
