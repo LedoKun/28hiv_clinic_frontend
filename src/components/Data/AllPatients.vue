@@ -18,6 +18,7 @@
 
             :hoverable="true"
             :mobile-cards="true"
+            :striped="true"
 
             :data="data"
             :loading="loading"
@@ -58,27 +59,27 @@
                     {{ props.row.cid }}
                 </b-table-column>
 
-                <b-table-column field="cid" label="ชื่อ">
+                <b-table-column field="name" label="ชื่อ">
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="cid" label="อายุ">
+                <b-table-column field="dob" label="อายุ">
                     {{ $moment(props.row.dob).fromNow(true) }}
                 </b-table-column>
 
-                <b-table-column field="cid" label="เพศ">
+                <b-table-column field="sex" label="เพศ">
                     {{ props.row.sex }}
                 </b-table-column>
 
-                <b-table-column field="cid" label="Gender">
+                <b-table-column field="gender" label="Gender">
                     {{ props.row.gender }}
                 </b-table-column>
 
-                <b-table-column field="cid" label="สัญชาติ">
+                <b-table-column field="nationality" label="สัญชาติ">
                     {{ props.row.nationality }}
                 </b-table-column>
 
-                <b-table-column field="cid" label="สิทธิ์">
+                <b-table-column field="payer" label="สิทธิ์">
                     {{ props.row.payer }}
                 </b-table-column>
 

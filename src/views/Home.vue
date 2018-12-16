@@ -19,6 +19,7 @@
                 :cardData="todayAppointment"
                 :header="'Appointments'"
                 :msgFieldName="'appointmentFor'"
+                v-model="appointmentPage"
             />
         </div>
         <!-- /today appointments -->
@@ -29,6 +30,7 @@
                 :cardData=" patientExamined"
                 :header="'Examined Patients'"
                 :msgFieldName="'impression'"
+                v-model="examinedPage"
             />
         </div>
         <!-- /patients examined -->
@@ -53,27 +55,36 @@ export default {
   created() {
   },
   watch: {
-      isLoggedin: function (newValue) {
-          if (newValue) {
-              this.fetchData()
-          } else {
-              this.setDefault()
-          }
-      }
+    isLoggedin: function (newValue) {
+        if (newValue) {
+            this.fetchData()
+        } else {
+            this.setDefault()
+        }
+    },
+    appointmentPage: function (newValue, oldValue) {
+        if (oldValue !== newValue) {
+            this.fetchData()
+        }
+    },
+    examinedPage: function (newValue, oldValue) {
+        if (oldValue !== newValue) {
+            this.fetchData()
+        }
+    },
   },
   mounted() {
     this.fetchData()
   },
   methods: {
-      setDefault() {
+    setDefault() {
         this.todayAppointment = []
         this.patientExamined = []
         this.countPatient = '-'
-      },
-      async fetchData () {
+    },
+    async fetchData () {
         let self = this
         let today = self.$moment().format('YYYY-MM-DD')
-        self.setDefault()
 
         if (!this.isLoggedin) {
             return
@@ -84,7 +95,9 @@ export default {
                 url: '/api/patient/dashboard',
                 method: 'get',
                 params: {
-                    date: today
+                    date: today,
+                    appointment_page_number: this.appointmentPage,
+                    examined_page_number: this.examinedPage,
                 }
             })
 
@@ -95,14 +108,14 @@ export default {
                 if (payload.todayAppointment && (Object.getOwnPropertyNames(payload.todayAppointment).length > 0)) {
                     self.todayAppointment = payload.todayAppointment
                 } else {
-                    self.todayAppointment = []
+                    self.todayAppointment = {}
                 }
 
                 // assign patientExamined
                 if (payload.patientExamined && (Object.getOwnPropertyNames(payload.patientExamined).length > 0)) {
                     self.patientExamined = payload.patientExamined
                 } else {
-                    self.patientExamined = []
+                    self.patientExamined = {}
                 }
 
                 if (payload.countPatient) {
@@ -114,14 +127,15 @@ export default {
             }
         } catch (error) {
             // error
+            self.setDefault()
         }
-      }
-  },
-  data: function () {
-    return {
-        todayAppointment: [],
-        patientExamined: [],
-        countPatient: '-'
+    },
+    countItem(items) {
+        if (!items) {
+            return 0
+        } else {
+            return Object.keys(items).length
+        }
     }
   },
   computed: {
@@ -130,10 +144,19 @@ export default {
     ]),
     dashboardInfo: function () {
         return {
-            countTodayAppointment: this.todayAppointment.length ? this.todayAppointment.length : '-',
-            countPatientExamined: this.patientExamined.length ? this.patientExamined.length : '-',
+            countTodayAppointment: this.countItem(this.todayAppointment.items),
+            countPatientExamined: this.countItem(this.patientExamined.items),
             countPatient: this.countPatient
         }
+    }
+  },
+  data: function () {
+    return {
+        todayAppointment: [],
+        patientExamined: [],
+        appointmentPage: 0,
+        examinedPage: 0,
+        countPatient: '-'
     }
   }
 }

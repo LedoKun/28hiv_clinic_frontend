@@ -2,7 +2,7 @@
 <b-collapse class="card">
     <div slot="trigger" slot-scope="props" class="card-header">
         <p class="card-header-title">
-            {{ header }} ({{ cardData.length }})
+            {{ header }} ({{ cardData.total }})
         </p>
         <a class="card-header-icon">
             <b-icon
@@ -11,29 +11,59 @@
         </a>
     </div>
     <div class="card-table">
-        <div class="content">
-            <!-- table -->
-            <table class="table is-fullwidth is-striped">
-                <tbody>
-                    <tr
-                        v-for="(item, key) in cardData"
-                        :key="key"
+        <!-- table -->
+        <b-table
+            class="table"
+
+            :hoverable="true"
+            :mobile-cards="true"
+            :narrowed="true"
+            :striped="true"
+
+            :data="cardData.items"
+
+            paginated
+            backend-pagination
+            :total="cardData.total"
+            :per-page="cardData.per_page"
+            @page-change="onPageChange"
+        >
+            <!-- empty -->
+            <template slot="empty">
+                <section class="section">
+                    <div class="content has-text-grey has-text-centered">
+                        <p>
+                            <b-icon
+                                icon="emoticon-sad"
+                                size="is-large">
+                            </b-icon>
+                        </p>
+                        <p>Nothing here.</p>
+                    </div>
+                </section>
+            </template>
+            <!-- /empty -->
+
+            <template slot-scope="props">
+                <b-table-column field="hn" label="HN" class="hnField">
+                    <a
+                        @click="goToPatient(props.row.patient.hn)"
                     >
-                        <td width="5%"><b-icon icon="account" /></td>
-                        <td width="15%">
-                            <a
-                                @click="goToPatient(item.patient.hn)"
-                            >
-                                HN: {{ item.patient.hn }}
-                            </a>
-                        </td>
-                        <td width="25%">{{ item.patient.name ? item.patient.name : '-' }}</td>
-                        <td>{{ item[msgFieldName] ? msgFormat(item[msgFieldName]) : '-' }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- /table -->
-        </div>
+                        {{ props.row.patient.hn }}
+                    </a>
+                </b-table-column>             
+
+                <b-table-column field="name" label="ชื่อ" class="nameField">
+                    {{ props.row.patient.name }}
+                </b-table-column>
+
+                <b-table-column field="data" class="dataField">
+                    {{ msgFormat(props.row[msgFieldName]) }}
+                </b-table-column>
+            </template>
+
+        </b-table>
+        <!-- /table -->
     </div>
 </b-collapse>
 </template>
@@ -43,13 +73,16 @@ export default {
     name: 'CardTable',
     props: {
         cardData: {
-            type: Array
+            type: [Object, Array]
         },
         header: {
             type: String
         },
         msgFieldName: {
             type: String
+        },
+        input: {
+            type: Number
         }
     },
     methods: {
@@ -67,7 +100,10 @@ export default {
             } else {
                 return msg
             }
-        } 
+        },
+        onPageChange (page) {
+            this.$emit('input', page)
+        }
     }
 }
 </script>
@@ -84,11 +120,23 @@ export default {
 .card .content {
   font-size: 14px;
 }
-.card-table .table {
-  margin-bottom: 0;
+.table {
+    width: 98%;
+    margin-left:auto; 
+    margin-right:auto;
+    margin-top: 2px;
 }
 .card-table {
   max-height: 350px;
   overflow-y: auto;
+}
+.table .hnField {
+    width: 20%;
+}
+.table .nameField {
+    width: 30%;
+}
+.table .dataField {
+    width: auto;
 }
 </style>
