@@ -44,7 +44,7 @@
                     <!-- appointmentFor -->
                     <div class="column">
                         <b-field
-                            label="For"
+                            label="For *"
                             :type="{'is-danger': errors.has('appointmentFor')}"
                             :message="errors.first('appointmentFor')"
                             custom-class="is-small"

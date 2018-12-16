@@ -90,7 +90,7 @@
                     <!-- dob -->
                     <div class="column">
                         <b-field
-                            label="วัน / เดือน / ปี เกิด"
+                            label="วัน / เดือน / ปี เกิด *"
                             custom-class="is-small"
                             :type="{'is-danger': errors.has('dob')}"
                             :message="errors.first('dob')"
@@ -102,6 +102,7 @@
                                 v-model="data.dob"
                                 name="dob"
                                 :max-date="new Date()"
+                                v-validate="'required'"
                             >
                             </b-datepicker>
                         </b-field>

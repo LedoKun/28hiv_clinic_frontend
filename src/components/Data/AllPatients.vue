@@ -64,7 +64,7 @@
                 </b-table-column>
 
                 <b-table-column field="dob" label="อายุ">
-                    {{ $moment(props.row.dob).fromNow(true) }}
+                    {{ $moment(props.row.dob).isValid() ? $moment(props.row.dob).fromNow(true) : '-' }}
                 </b-table-column>
 
                 <b-table-column field="sex" label="เพศ">
