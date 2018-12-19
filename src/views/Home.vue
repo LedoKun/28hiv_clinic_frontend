@@ -152,8 +152,8 @@ export default {
   },
   data: function () {
     return {
-        todayAppointment: [],
-        patientExamined: [],
+        todayAppointment: {},
+        patientExamined: {},
         appointmentPage: 0,
         examinedPage: 0,
         countPatient: '-'

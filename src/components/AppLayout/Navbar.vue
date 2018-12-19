@@ -34,6 +34,14 @@
         </router-link>
 
         <router-link
+            :to="{ name: 'appointment' }"
+            class="navbar-item"
+            v-if="isLoggedin"
+        >
+            ผู้ป่วยนัด
+        </router-link>
+
+        <router-link
             :to="{ name: 'data' }"
             class="navbar-item"
             exact

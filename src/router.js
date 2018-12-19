@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Patient from './views/Patient.vue'
 import Data from './views/Data.vue'
+import Appointment from './views/Appointment.vue'
 
 Vue.use(Router)
 
@@ -27,6 +28,11 @@ export default new Router({
       path: '/data',
       name: 'data',
       component: Data
+    },
+    {
+      path: '/appointment',
+      name: 'appointment',
+      component: Appointment
     },
     // 404
     {
