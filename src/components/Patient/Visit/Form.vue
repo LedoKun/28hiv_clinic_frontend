@@ -139,7 +139,6 @@
 
                 <div class="columns">
                     <!-- impression -->
-                    <!-- todo: server side tag search -->
                     <div class="column">
                         <b-field
                             custom-class="is-small"
@@ -159,7 +158,9 @@
                         </b-field>
                     </div>
                     <!-- / impression -->
+                </div>
 
+                <div class="columns">
                     <!-- ARV -->
                     <div class="column">
                         <b-field
@@ -174,11 +175,30 @@
                                 :allow-new="true"
                                 icon="label"
                                 placeholder="Add an ARV medication..."
-                                @typing="getFilterARV"
+                                @typing="getFilterARV(text, 123)"
                             />
                         </b-field>
                     </div>
                     <!-- / ARV -->
+
+                    <!-- whySwitch -->
+                    <div class="column">
+                        <b-field
+                            label="Why Switched ARV?"
+                            :type="{'is-danger': errors.has('whySwitch')}"
+                            :message="errors.first('whySwitch')"
+                            custom-class="is-small"
+                        >
+                            <b-input
+                                type="text"
+                                size="is-small"
+                                v-model="data.whySwitch"
+                                name="whySwitch"
+                                v-validate="'min:2'"
+                            />
+                        </b-field>
+                    </div>
+                    <!-- / whySwitch -->
 
                     <!-- oiProphylaxis -->
                     <div class="column">
@@ -268,13 +288,15 @@ import { mapFields } from 'vuex-map-fields'
 import { mapActions } from 'vuex'
 import instance from '@/utils/http'
 
+let formChoices = require('./VisitFormChoices.js')
+let optionsFilter = require('./FilterFunction.js').optionsFilter
 
 Vue.use(VeeValidate, {
     events: ''
 })
 
 export default {
-    name: 'VisitInfo',
+    name: 'Form',
     computed: {
         ...mapFields('Visit', [
             'data'
@@ -330,16 +352,16 @@ export default {
             })
         },
         async getFilterICD10 (keyword) {
+            let self = this
+            self.filteredICD10 = []
+
             if (String(keyword).length <= 0) {
                 return
             }
 
-            let self = this
-            self.filteredICD10 = []
-
             try {
                 let response = await instance({
-                    url: '/api/search/icd10',
+                    url: 'search/icd10',
                     method: 'get',
                     params: {
                         keyword: keyword
@@ -353,36 +375,16 @@ export default {
 
         },
         getFilterARV (text) {
-            this.filteredARV = this.visitOption.arv.filter((option) => {
-                return option
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(text.toLowerCase()) >= 0
-            })
+            this.filteredARV = optionsFilter(text, this.visitOption.arv)
         },
         getFilterIO (text) {
-            this.filteredOI = this.visitOption.oiProphylaxis.filter((option) => {
-                return option
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(text.toLowerCase()) >= 0
-            })
+            this.filteredOI = optionsFilter(text, this.visitOption.oiProphylaxis)
         },
         getFilteredAntiTB (text) {
-            this.filteredAntiTB = this.visitOption.antiTB.filter((option) => {
-                return option
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(text.toLowerCase()) >= 0
-            })
+            this.filteredAntiTB = optionsFilter(text, this.visitOption.antiTB)
         },
         getFilteredVaccine (text) {
-            this.filteredVaccine = this.visitOption.vaccination.filter((option) => {
-                return option
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(text.toLowerCase()) >= 0
-            })
+            this.filteredVaccine = optionsFilter(text, this.visitOption.vaccination)
         }
     },
     data: function () {
@@ -395,61 +397,11 @@ export default {
             debouncedICD10Filter: this.$_.debounce(this.getFilterICD10, 500),
 
             visitOption: {
-                contactTB: [
-                    'Contacted with TB',
-                    'Not Contacted with TB'
-                ],
-                arv: [
-                    '3TC',
-                    'ABC',
-                    'APV',
-                    'ATV',
-                    'BIC',
-                    'COBI',
-                    'd4T',
-                    'ddI',
-                    'DLV',
-                    'DOR',
-                    'DRV',
-                    'DTG',
-                    'EFV',
-                    'ETR',
-                    'EVG',
-                    'FPV',
-                    'FTC',
-                    'IBA',
-                    'IDV',
-                    'LPV',
-                    'MVC',
-                    'NFV',
-                    'NVP',
-                    'RAL',
-                    'RPV',
-                    'RTV',
-                    'SQV',
-                    'T20',
-                    'TAF',
-                    'TDF',
-                    'TPV',
-                    'ZDV'
-                ],
-                oiProphylaxis: [
-                    'Azithromycin',
-                    'Bactrim',
-                    'Fluconazole',
-                    'Itraconazole'
-                ],
-                antiTB: [
-                    'Ethambutol',
-                    'Isoniazid',
-                    'Pyrazinamide',
-                    'Rifampicin',
-                    'Streptomycin'
-                ],
-                vaccination: [
-                    'Hepatitis B Vaccine',
-                    'Influenza Vaccine'
-                ]
+                contactTB: formChoices.contactTB,
+                arv: formChoices.arv,
+                oiProphylaxis: formChoices.oiProphylaxis,
+                antiTB: formChoices.antiTB,
+                vaccination: formChoices.vaccination
             }
         }
     }

@@ -92,7 +92,7 @@ export default {
 
         try {
             let response = await instance({
-                url: '/api/patient/dashboard',
+                url: 'patient/dashboard',
                 method: 'get',
                 params: {
                     date: today,

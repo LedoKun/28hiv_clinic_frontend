@@ -1,5 +1,5 @@
 <template>
-<aside class="is-medium">
+<div>
         <!-- Ix Results -->
         <b-collapse class="card">
             <div slot="trigger" slot-scope="props" class="card-header">
@@ -12,50 +12,60 @@
                     </b-icon>
                 </a>
             </div>
-            <div class="card-table overflow-table">
-                <div class="content">
-                    <!-- table -->
-                    <table class="table is-fullwidth is-striped">
-                        <tbody>
-                            <tr>
-                                <td class="row-header">
-                                    #
-                                </td>
-                                <td class="row-header">
-                                    Date
-                                </td>
-                                <td class="row-header">
-                                    For
-                                </td>
-                                <td class="row-header">
-                                </td>
-                            </tr>
-                            <tr
-                                v-for="(item, key) in previousAppointments"
-                                :key=key
-                            >
-                                <td>{{ key + 1 }}</td>
-                                <td>
-                                    {{ $moment(item.date).isValid() ? $moment(item.date).format("DD/MM/YYYY") : "-" }}
-                                </td>
-                                <td>{{ item.appointmentFor ? item.appointmentFor : "" }}</td>
-                                <td><a class="button is-danger is-small is-pulled-right" @click="deleteData(item.id)">Delete</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- /table -->
-                </div>
+
+            <div class="table-container">
+                <!-- table -->
+                <b-table
+                :data="previousAppointments"
+                :striped="true"
+                :narrowed="true"
+                :hoverable="true"
+                :mobile-cards="true"
+                >
+                    <template slot-scope="props">
+                        <b-table-column
+                        field="date"
+                        label="Date"
+                        >{{ $moment(props.row.date).isValid() ? $moment(props.row.date).format("DD/MM/YYYY") : "-" }}</b-table-column>
+
+                        <b-table-column
+                        field="appointmentFor"
+                        label="Appointment For"
+                        >{{ props.row.appointmentFor }}</b-table-column>
+
+                        <b-table-column field="actions" label>
+                        <a
+                            class="button is-danger is-small is-pulled-right"
+                            @click="deleteData(props.row.id)"
+                        >Delete</a>
+                        </b-table-column>
+
+                    </template>
+
+
+                    <template slot="empty">
+                        <section class="section">
+                        <div class="content has-text-grey has-text-centered">
+                            <p>
+                            <b-icon icon="emoticon-sad" size="is-large"></b-icon>
+                            </p>
+                            <p>Nothing here.</p>
+                        </div>
+                        </section>
+                    </template>
+                </b-table>
+                <!-- /table -->
             </div>
         </b-collapse>
          <!-- /Ix Results -->
-</aside>
+</div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 
 export default {
-    name: 'ListAppointments',
+    name: 'AppointmentTable',
     computed: {
         ...mapState('Appointment', [
             'previousAppointments'
@@ -99,12 +109,8 @@ export default {
 </script>
 
 <style scoped>
-.row-header {
-    font-weight: bold;
-}
-.overflow-table {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
+.b-table {
+  margin: 2px auto 0px auto;
+  font-size: 0.8em;
 }
 </style>

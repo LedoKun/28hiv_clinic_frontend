@@ -14,6 +14,7 @@ let initialState = {
         delayedDosing: null,
         impression: [],
         arv: [],
+        whySwitch: null,
         oiProphylaxis: [],
         antiTB: [],
         vaccination: []
@@ -55,7 +56,7 @@ let actions = {
         }
 
         try {
-            let relativeURL = '/api/patient/' + urlEncode(hn) + '/visit'
+            let relativeURL = 'patient/' + urlEncode(hn) + '/visit'
             let response = await instance({
                 url: relativeURL,
                 method: 'get'
@@ -80,7 +81,7 @@ let actions = {
         }
 
         return instance({
-            url: '/api/patient/' + urlEncode(hn) + '/visit',
+            url: 'patient/' + urlEncode(hn) + '/visit',
             method: 'put',
             data: state.data
         })
@@ -93,7 +94,7 @@ let actions = {
         }
 
         let relativeURL = (
-            '/api/patient/'
+            'patient/'
             + urlEncode(hn)
             + '/visit/'
             + urlEncode(id)

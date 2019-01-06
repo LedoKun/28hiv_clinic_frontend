@@ -135,7 +135,7 @@ export default {
 
             try {
                 let response = await instance({
-                    url: '/api/data/all_patients',
+                    url: 'data/all_patients',
                     method: 'get',
                     params: {
                         page_number: self.page

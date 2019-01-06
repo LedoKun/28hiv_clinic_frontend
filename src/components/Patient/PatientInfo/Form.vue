@@ -398,7 +398,7 @@ Vue.use(VeeValidate, {
 })
 
 export default {
-    name: 'PatientInfo',
+    name: 'PatientForm',
     computed: {
         ...mapFields('Patient', [
             'data',

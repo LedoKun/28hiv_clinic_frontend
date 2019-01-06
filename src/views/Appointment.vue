@@ -2,7 +2,7 @@
 <div class="container">
     <div class="columns">
         <!-- select date -->
-        <div class="column is-3">
+        <div class="column is-4">
             <form>
                 <b-field
                     label="เลือกวันที่"
@@ -214,11 +214,7 @@ export default {
         },
     },
     mounted: function () {
-        this.dateSelected = new Date(
-            this.today.getFullYear(),
-            this.today.getMonth(),
-            this.today.getDate()
-        )
+        this.dateSelected = new Date()
         this.fetchData()
     },
     methods: {
@@ -232,14 +228,17 @@ export default {
         },
         async fetchData () {
             let self = this
-            this.isReady = false
+            let dateParam = this.$moment(self.dateSelected)
+
+            dateParam = dateParam.isValid() ? dateParam : this.$moment()
+            self.isReady = false
 
             try {
                 let response = await instance({
-                    url: '/api/patient/dashboard',
+                    url: 'patient/dashboard',
                     method: 'get',
                     params: {
-                        date: self.dateSelected,
+                        date: dateParam.format('YYYY-MM-DD'),
                         appointment_page_number: this.appointmentPage,
                         examined_page_number: this.examinedPage,
                     }
@@ -267,8 +266,14 @@ export default {
             } catch (error) {
                 // error
                 self.setDefault()
-                this.isReady = false
             }
+        },
+        setDefault () {
+            this.appointment = {}
+            this.examined = {}
+            this.appointmentPage = 0
+            this.examinedPage = 0
+            this.isReady = false
         },
         msgFormat (msg) {
             if (Object.prototype.toString.call(msg) === '[object Array]') {
@@ -280,7 +285,6 @@ export default {
     },
     data: function () {
         return {
-            today: new Date(),
             dateSelected: null,
             appointment: {},
             examined: {},

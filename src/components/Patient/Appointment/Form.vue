@@ -16,7 +16,7 @@
         <div class="content">
             <form
                 @submit.prevent="saveForm"
-                id="AppointmentInfo"
+                id="AppointmentForm"
             >
                 <div class="columns">
                     <!-- date -->
@@ -95,7 +95,7 @@ Vue.use(VeeValidate, {
 })
 
 export default {
-    name: 'AppointmentInfo',
+    name: 'AppointmentForm',
     computed: {
         ...mapFields('Appointment', [
             'data'
@@ -116,7 +116,7 @@ export default {
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: () => {
-                    document.getElementById('AppointmentInfo').reset()
+                    document.getElementById('AppointmentForm').reset()
                     this.$toast.open('Form Reseted!')
                 }
             })

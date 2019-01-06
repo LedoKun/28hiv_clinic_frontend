@@ -7,19 +7,76 @@ let _ = require('lodash')
 let initialState = {
     data: {
         date: null,
+
         antiHIV: null,
         cd4: null,
         pCD4: null,
         vl: null,
+
+        wbc: null,
+        hb: null,
+        hct: null,
+        wbcPNeu: null,
+        wbcPLym: null,
+        wbcPEos: null,
+        wbcPBasos: null,
+
+        bun: null,
+        cr: null,
+    
+        na: null,
+        k: null,
+        cl: null,
+        hco3: null,
+        ca: null,
+        mg: null,
+        po4: null,
+
+        fbs: null,
+        hba1c: null,
+
+        urine_glucose_dipstick: null,
+        urine_prot_dipstick: null,
+        urine_glucose: null,
+        urine_prot: null,
+        urine_cr: null,
+
+        chol: null,
+        tg: null,
+        hdl: null,
+        ldl: null,
+
+        total_prot: null,
+        albumin: null,
+        globulin: null,
+        total_bilirubin: null,
+        direct_bilirubin: null,
+        ast: null,
+        alt: null,
+        alp: null,
+
+        tpha: null,
         vdrl: null,
         rpr: null,
+
         hbsag: null,
         antiHBs: null,
         antiHCV: null,
+
+        cryptoAgBlood: null,
+        cryptoAgCSF: null,
+
         ppd: null,
         cxr: null,
-        tb: null,
-        hivResistence: null
+    
+        afb: null,
+        sputumCulture: null,
+        dst: null,
+        geneXpert: null,
+        lineProbeAssay: null,
+
+        hivResistance: [],
+        hivMutation: [],
     }
 }
 
@@ -57,7 +114,7 @@ let actions = {
             return
         }
 
-        let relativeURL = '/api/patient/' + urlEncode(hn) + '/investigation'
+        let relativeURL = 'patient/' + urlEncode(hn) + '/investigation'
 
         try {
             let response = await instance({
@@ -84,7 +141,7 @@ let actions = {
         }
 
         return instance({
-            url: '/api/patient/' + urlEncode(hn) + '/investigation',
+            url: 'patient/' + urlEncode(hn) + '/investigation',
             method: 'put',
             data: state.data
         })
@@ -97,7 +154,7 @@ let actions = {
         }
 
         let relativeURL = (
-            '/api/patient/'
+            'patient/'
             + urlEncode(hn)
             + '/investigation/'
             + urlEncode(id)

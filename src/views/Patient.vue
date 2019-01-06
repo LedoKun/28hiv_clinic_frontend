@@ -1,93 +1,109 @@
 <template>
     <div class="container">
-        <div class="columns">
-            <div class="column is-3">
-                <div class="columns">
-                    <div class="column">
-                        <SideInfo />
+
+        <!-- Patient information Section -->
+        <section class="section">
+
+            <div class="columns">
+                <div class="column is-3">
+                    <div class="columns">
+                        <div class="column">
+                            <SideInfo />
+                        </div>
                     </div>
+                </div>
+
+                <div class="column">
+                    <!-- patient basic info form -->
+                    <div class="columns">
+                        <div class="column">
+                            <PatientForm />
+                        </div>
+                    </div>
+                    <!-- / patient basic info form -->
+                </div>
+            </div>
+    
+        </section>
+        <!-- / Patient information Section -->
+
+        <!-- Visit Infoirmation Section -->
+        <section
+            class="section"
+            v-if="isPatientSaved"
+        >
+
+            <div class="columns">
+                <div class="column">
+                    <PreviousVisits />
                 </div>
             </div>
 
-            <div class="column">
-                <!-- patient basic info form -->
-                <div class="columns">
-                    <div class="column">
-                        <PatientInfo />
-                    </div>
+            <div class="columns">
+                <div class="column">
+                    <VisitInfo />
                 </div>
-                <!-- / patient basic info form -->
             </div>
-        </div>
 
-         <!-- previous visits -->
-        <div
-            class="columns"
+        </section>
+        <!-- / Visit Infoirmation Section -->
+
+        <!-- Investigation results -->
+        <section
+            class="section"
             v-if="isPatientSaved"
         >
-            <div class="column">
-                <PreviousVisits />
-            </div>
-        </div>
-        <!-- / previous visits -->
 
-        <!-- patient visit form -->
-        <div
-            class="columns"
+            <div class="columns">
+                <div class="column">
+                    <IxTable />
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <IxForm />
+                </div>
+            </div>
+
+        </section>
+        <!-- / Investigation results -->
+
+        <!-- Appointments -->
+        <section
+            class="section"
             v-if="isPatientSaved"
         >
-            <div class="column">
-                <VisitInfo />
+            <div class="columns">
+                <div class="column is-5">
+                    <AppointmentTable />
+                </div>
+                <div class="column">
+                    <AppointmentForm />
+                </div>
             </div>
-        </div>
-        <!-- / patient visit form -->
-
-        <div
-            class="columns"
-            v-if="isPatientSaved"
-        >
-            <div class="column">
-                <IxResults />
-            </div>
-        </div>
-
-        <!-- LabsInfo form -->          
-        <div
-            class="columns"
-            v-if="isPatientSaved"
-        >
-            <div class="column">
-                <IxInfo />
-            </div>
-        </div>
-        <!-- / LabsInfo form -->
-
-        <!-- Appointments -->              
-        <div
-            class="columns"
-            v-if="isPatientSaved"
-        >
-            <div class="column is-5">
-                <ListAppointments />
-            </div>
-            <div class="column">
-                <AppointmentInfo />
-            </div>
-        </div>
+        </section>
         <!-- / Appointments -->
 
     </div>
 </template>
 
 <script>
-import SideInfo from '../components/Patient/SideInfo.vue'
-import PatientInfo from '../components/Patient/PatientInfo.vue'
-import PreviousVisits from '../components/Patient/PreviousVisits.vue'
-import VisitInfo from '../components/Patient/VisitInfo.vue'
-import IxResults from '../components/Patient/IxResults.vue'
-import IxInfo from '../components/Patient/IxInfo.vue'
-import ListAppointments from '../components/Patient/ListAppointments.vue'
-import AppointmentInfo from '../components/Patient/AppointmentInfo.vue'
+// Patient section
+import SideInfo from '../components/Patient/PatientInfo/SideInfo.vue'
+import PatientForm from '../components/Patient/PatientInfo/Form.vue'
+
+// Visit section
+import PreviousVisits from '../components/Patient/Visit/Table.vue'
+import VisitInfo from '../components/Patient/Visit/Form.vue'
+
+// Ix Section
+import IxTable from '../components/Patient/Investigation/Table.vue'
+import IxForm from '../components/Patient/Investigation/Form.vue'
+
+// Appointment Section
+import AppointmentTable from '../components/Patient/Appointment/Table.vue'
+import AppointmentForm from '../components/Patient/Appointment/Form.vue'
 
 import { mapActions, mapState } from 'vuex'
 
@@ -98,13 +114,13 @@ export default {
     ],
     components: {
         SideInfo,
-        PatientInfo,
+        PatientForm,
         PreviousVisits,
         VisitInfo,
-        IxResults,
-        IxInfo,
-        ListAppointments,
-        AppointmentInfo
+        IxTable,
+        IxForm,
+        AppointmentTable,
+        AppointmentForm
     },
     created () {
         this.setPatientDefault()
@@ -154,9 +170,6 @@ export default {
 </script>
 
 <style scoped>
-</style>
-
-<style>
 .card {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
     margin-bottom: 2rem;
@@ -167,13 +180,5 @@ export default {
 }
 .card .content {
     font-size: 14px;
-}
-.card-table .table {
-    margin-bottom: 0;
-}
-.card-table {
-    max-height: 80%;
-    overflow-y: auto;
-    table-layout: auto;
 }
 </style>

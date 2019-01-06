@@ -96,7 +96,7 @@ export default {
 
             try {
                 let response = await instance({
-                    url: '/api/data/stats',
+                    url: 'data/stats',
                     method: 'get'
                 })
 

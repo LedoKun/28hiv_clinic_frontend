@@ -56,7 +56,7 @@ export default {
 
             try {
                 let response = await instance({
-                    url: '/api/search/patient',
+                    url: 'search/patient',
                     method: 'get',
                     params: {
                         keyword: String(self.keyword).replace(/\//g, "_")

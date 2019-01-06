@@ -43,7 +43,7 @@ let actions = {
             return
         }
 
-        let relativeURL = '/api/patient/' + urlEncode(hn) + '/appointment'
+        let relativeURL = 'patient/' + urlEncode(hn) + '/appointment'
 
         try {
             let response = await instance({
@@ -70,7 +70,7 @@ let actions = {
         }
 
         return instance({
-            url: '/api/patient/' + urlEncode(hn) + '/appointment',
+            url: 'patient/' + urlEncode(hn) + '/appointment',
             method: 'put',
             data: state.data
         })
@@ -83,7 +83,7 @@ let actions = {
         }
 
         let relativeURL = (
-            '/api/patient/'
+            'patient/'
             + urlEncode(hn)
             + '/appointment/'
             + urlEncode(id)

@@ -27,7 +27,7 @@ let actions = {
 
         try {
             let response = await instance({
-                url: '/api/auth/logout',
+                url: 'auth/logout',
                 method: 'delete',
                 data: {
                     'jwt_token': localStorage.getItem('jwt_token'),
@@ -49,7 +49,7 @@ let actions = {
 
         try {
             let response = await instance({
-                url: '/api/auth/login',
+                url: 'auth/login',
                 method: 'post',
                 data: credential
             })
@@ -77,7 +77,7 @@ let actions = {
         }
 
         return instance({
-            url: '/api/auth/create_user',
+            url: 'auth/create_user',
             method: 'post',
             data: credential
         })

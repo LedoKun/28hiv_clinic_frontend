@@ -59,7 +59,7 @@ let actions = {
     async submitAction(context) {
         try {
             let response = await instance({
-                url: '/api/patient',
+                url: 'patient',
                 method: 'put',
                 data: state.data
             })
@@ -73,7 +73,7 @@ let actions = {
         }
     },
     deleteAction() {
-        let relativeURL = '/api/patient/' + urlEncode(state.data.hn)
+        let relativeURL = 'patient/' + urlEncode(state.data.hn)
 
         return instance({
             url: relativeURL,
@@ -81,7 +81,7 @@ let actions = {
         })
     },
     async loadAction(context, hn) {
-        let relativeURL = '/api/patient/' + urlEncode(hn)
+        let relativeURL = 'patient/' + urlEncode(hn)
 
         try {
             let response = await instance({

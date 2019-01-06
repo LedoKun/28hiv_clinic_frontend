@@ -1,10 +1,10 @@
 import store from '../store'
 import { Toast } from 'buefy/dist/components/toast'
+import axiosRetry from 'axios-retry';
 
 let _ = require('lodash')
 let axios = require('axios')
-
-let apiBaseURL = '/api'
+let appConfig = require('../config.js')
 
 function formatDate(date) {
     let month = '' + (date.getMonth() + 1)
@@ -58,7 +58,8 @@ async function responseFailure(error) {
 
         try {
             let response = await axios({
-                url: `${apiBaseURL}/auth/token_refresh`,
+                baseURL: appConfig['apiBaseURL'],
+                url: `auth/token_refresh`,
                 method: 'post',
                 headers: {
                     'Authorization': `Bearer ${refresh_token}`
@@ -78,7 +79,7 @@ async function responseFailure(error) {
 
             // Disply error toast
             Toast.open({
-                message: 'กรุณาเข้าสูระบบอีกครั้ง',
+                message: 'กรุณาเข้าสู่ระบบอีกครั้ง',
                 type: 'is-danger',
                 position: 'is-bottom',
                 duration: 8000
@@ -114,7 +115,8 @@ async function responseFailure(error) {
 
 // create common instance for API
 const instance = axios.create({
-    timeout: 10000
+    baseURL: appConfig['apiBaseURL'],
+    timeout: appConfig['httpTimeOut']
 })
 
 instance.interceptors.request.use(
@@ -126,5 +128,7 @@ instance.interceptors.response.use(
     (response) => responseSuccess(response),
     (error) => responseFailure(error)
 )
+
+axiosRetry(instance, { retries: appConfig['httpRetry'] })
 
 export default instance
