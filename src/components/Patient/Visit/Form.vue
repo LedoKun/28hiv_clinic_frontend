@@ -175,7 +175,7 @@
                                 :allow-new="true"
                                 icon="label"
                                 placeholder="Add an ARV medication..."
-                                @typing="getFilterARV(text, 123)"
+                                @typing="getFilterARV"
                             />
                         </b-field>
                     </div>
