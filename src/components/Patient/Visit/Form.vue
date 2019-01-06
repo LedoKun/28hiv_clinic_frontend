@@ -154,6 +154,7 @@
                                 icon="label"
                                 placeholder="Add an impression..."
                                 @typing="debouncedICD10Filter"
+                                v-validate="'required'"
                             />
                         </b-field>
                     </div>
