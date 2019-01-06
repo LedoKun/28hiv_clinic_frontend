@@ -14,6 +14,7 @@
                         size="is-small"
                         v-model="dateSelected"
                         name="date"
+                        editable
                     >
                     </b-datepicker>
                 </b-field>

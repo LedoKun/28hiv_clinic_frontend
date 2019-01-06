@@ -20,6 +20,18 @@ Vue.use(Buefy, {
     let momentDate = Moment(date)
     return momentDate.isValid() ? momentDate.format('DD/MM/YYYY') : null
   },
+  defaultDateParser: (date) => {
+    let dateArray = date.split('/')
+
+    if (dateArray.length === 3 && dateArray[2] >= 2200) {
+      dateArray[2] = dateArray[2] - 543
+
+      let momentDate = Moment(`${dateArray[0]}/${dateArray[1]}/${dateArray[2]}`, 'DD/MM/YYYY')
+      return momentDate.isValid() ? momentDate.toDate() : null
+    } else {
+      return null
+    }
+  },
   defaultMonthNames: [
     "1 - มกราคม",
     "2 - กุมภาพันธ์",

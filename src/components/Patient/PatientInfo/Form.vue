@@ -103,6 +103,7 @@
                                 name="dob"
                                 :max-date="new Date()"
                                 v-validate="'required'"
+                                editable
                             >
                             </b-datepicker>
                         </b-field>

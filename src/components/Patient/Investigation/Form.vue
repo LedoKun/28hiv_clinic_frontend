@@ -35,8 +35,8 @@
                                 name="date"
                                 :max-date="new Date()"
                                 v-validate="'required'"
-                            >
-                            </b-datepicker>
+                                editable
+                            />
                         </b-field>
                     </div>
                     <!-- / date -->

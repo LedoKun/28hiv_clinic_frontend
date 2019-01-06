@@ -35,6 +35,7 @@
                                 name="date"
                                 :min-date="new Date()"
                                 v-validate="'required'"
+                                editable
                             >
                             </b-datepicker>
                         </b-field>

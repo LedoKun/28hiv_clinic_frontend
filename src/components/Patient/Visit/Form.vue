@@ -34,8 +34,8 @@
                                 name="date"
                                 :max-date="new Date()"
                                 v-validate="'required'"
-                            >
-                            </b-datepicker>
+                                editable
+                            />
                         </b-field>
                     </div>
                     <!-- / date -->
@@ -308,6 +308,12 @@ export default {
             'submitAction',
             'loadAction'
         ]),
+        resetForm () {
+            document.getElementById('VisitInfoForm').reset()
+            this.setDefaultAction()
+            this.errors.clear()
+            this.dateInput = null
+        },
         confirmReset () {
             this.$dialog.confirm({
                 title: 'Reseting Visit Form',
@@ -317,7 +323,7 @@ export default {
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: () => {
-                    document.getElementById('VisitInfoForm').reset()
+                    this.resetForm()
                     this.$toast.open('Form Reseted!')
                 }
             })
@@ -335,8 +341,7 @@ export default {
                             position: 'is-bottom'
                         })
 
-                        self.setDefaultAction()
-                        self.errors.clear()
+                        self.resetForm()
                         self.loadAction()
                     } catch (error) {
                         // error
@@ -394,6 +399,7 @@ export default {
             filteredOI: [],
             filteredAntiTB: [],
             filteredVaccine: [],
+
             debouncedICD10Filter: this.$_.debounce(this.getFilterICD10, 500),
 
             visitOption: {
@@ -402,7 +408,7 @@ export default {
                 oiProphylaxis: formChoices.oiProphylaxis,
                 antiTB: formChoices.antiTB,
                 vaccination: formChoices.vaccination
-            }
+            },
         }
     }
 }
