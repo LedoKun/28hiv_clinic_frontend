@@ -331,9 +331,9 @@
                             <b-input
                                 type="number"
                                 placeholder="0.00"
-                                step="0.1"
+                                step="0.01"
                                 size="is-small"
-                                min="0.0"
+                                min="0.00"
                                 v-model="data.cr"
                                 name="cr"
                                 v-validate="'decimal:2|min_value:0'"
