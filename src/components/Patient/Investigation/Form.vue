@@ -75,11 +75,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.cd4"
                                 name="cd4"
                                 v-validate="'numeric|min_value:0'"
@@ -97,12 +95,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 icon="percent"
-                                step="0.01"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.pCD4"
                                 name="pCD4"
                                 v-validate="'decimal:2|min_value:0|max_value:100'"
@@ -120,9 +116,8 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 size="is-small"
-                                min="0"
                                 v-model="data.vl"
                                 name="vl"
                                 v-validate="'numeric|min_value:0'"
@@ -144,11 +139,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.wbc"
                                 name="wbc"
                                 v-validate="'decimal:2|min_value:0'"
@@ -166,11 +159,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.hb"
                                 name="hb"
                                 v-validate="'decimal:2|min_value:0'"
@@ -188,12 +179,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 icon="percent"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.hct"
                                 name="hct"
                                 v-validate="'decimal:2|min_value:0'"
@@ -211,12 +200,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 icon="percent"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.wbcPNeu"
                                 name="wbcPNeu"
                                 v-validate="'decimal:2|min_value:0|max_value:100'"
@@ -234,12 +221,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 icon="percent"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.wbcPLym"
                                 name="wbcPLym"
                                 v-validate="'decimal:2|min_value:0|max_value:100'"
@@ -257,12 +242,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 icon="percent"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.wbcPEos"
                                 name="wbcPEos"
                                 v-validate="'decimal:2|min_value:0|max_value:100'"
@@ -280,12 +263,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 icon="percent"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.wbcPBasos"
                                 name="wbcPBasos"
                                 v-validate="'decimal:2|min_value:0|max_value:100'"
@@ -307,11 +288,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.bun"
                                 name="bun"
                                 v-validate="'decimal:2|min_value:0'"
@@ -329,11 +308,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.01"
                                 size="is-small"
-                                min="0.00"
                                 v-model="data.cr"
                                 name="cr"
                                 v-validate="'decimal:2|min_value:0'"
@@ -351,11 +328,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.na"
                                 name="na"
                                 v-validate="'decimal:2|min_value:0'"
@@ -373,11 +348,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.k"
                                 name="k"
                                 v-validate="'decimal:2|min_value:0'"
@@ -395,11 +368,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.cl"
                                 name="cl"
                                 v-validate="'decimal:2|min_value:0'"
@@ -417,11 +388,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.hco3"
                                 name="hco3"
                                 v-validate="'decimal:2|min_value:0'"
@@ -439,11 +408,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.ca"
                                 name="ca"
                                 v-validate="'decimal:2|min_value:0'"
@@ -461,11 +428,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.mg"
                                 name="mg"
                                 v-validate="'decimal:2|min_value:0'"
@@ -483,11 +448,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.po4"
                                 name="po4"
                                 v-validate="'decimal:2|min_value:0'"
@@ -507,12 +470,11 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
                                 size="is-small"
                                 v-model="data.fbs"
                                 name="fbs"
-                                min="0"
                                 v-validate="'numeric|min_value:0'"
                             />
                         </b-field>
@@ -528,11 +490,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.hba1c"
                                 name="hba1c"
                                 v-validate="'decimal:2|min_value:0'"
@@ -552,12 +512,11 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
                                 size="is-small"
                                 v-model="data.urine_glucose_dipstick"
                                 name="urine_glucose_dipstick"
-                                min="0"
                                 v-validate="'decimal:2|min_value:0'"
                             />
                         </b-field>
@@ -573,12 +532,11 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
                                 size="is-small"
                                 v-model="data.urine_prot_dipstick"
                                 name="urine_prot_dipstick"
-                                min="0"
                                 v-validate="'decimal:2|min_value:0'"
                             />
                         </b-field>
@@ -594,11 +552,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.urine_glucose"
                                 name="urine_glucose"
                                 v-validate="'decimal:2|min_value:0'"
@@ -616,11 +572,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.urine_prot"
                                 name="urine_prot"
                                 v-validate="'decimal:2|min_value:0'"
@@ -638,11 +592,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.urine_cr"
                                 name="urine_cr"
                                 v-validate="'decimal:2|min_value:0'"
@@ -663,11 +615,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.chol"
                                 name="chol"
                                 v-validate="'decimal:2|min_value:0'"
@@ -685,11 +635,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.tg"
                                 name="tg"
                                 v-validate="'decimal:2|min_value:0'"
@@ -707,11 +655,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.hdl"
                                 name="hdl"
                                 v-validate="'decimal:2|min_value:0'"
@@ -729,11 +675,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.ldl"
                                 name="ldl"
                                 v-validate="'decimal:2|min_value:0'"
@@ -755,11 +699,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.total_prot"
                                 name="total_prot"
                                 v-validate="'decimal:2|min_value:0'"
@@ -777,11 +719,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.albumin"
                                 name="albumin"
                                 v-validate="'decimal:2|min_value:0'"
@@ -799,11 +739,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.globulin"
                                 name="globulin"
                                 v-validate="'decimal:2|min_value:0'"
@@ -821,11 +759,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.total_bilirubin"
                                 name="total_bilirubin"
                                 v-validate="'decimal:2|min_value:0'"
@@ -843,11 +779,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.direct_bilirubin"
                                 name="direct_bilirubin"
                                 v-validate="'decimal:2|min_value:0'"
@@ -865,11 +799,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.ast"
                                 name="ast"
                                 v-validate="'decimal:2|min_value:0'"
@@ -887,11 +819,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.alt"
                                 name="alt"
                                 v-validate="'decimal:2|min_value:0'"
@@ -909,11 +839,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.1"
                                 size="is-small"
-                                min="0.0"
                                 v-model="data.alp"
                                 name="alp"
                                 v-validate="'decimal:2|min_value:0'"
@@ -992,11 +920,9 @@
                                 </p>
                                 <p class="control full-width-input">
                                     <b-input
-                                        type="number"
+                                        type="text"
                                         placeholder="0"
-                                        step="1"
                                         size="is-small"
-                                        min="0"
                                         v-model="data.rpr"
                                         name="rpr"
                                         v-validate="'numeric|min_value:0'"
@@ -1185,11 +1111,9 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.ppd"
                                 name="ppd"
                                 v-validate="'numeric|min_value:0'"

@@ -49,9 +49,8 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
-                                step="0.01"
                                 size="is-small"
                                 v-model="data.bw"
                                 name="bw"
@@ -98,13 +97,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 icon="percent"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
-                                max="100"
                                 v-model="data.adherenceScale"
                                 name="adherenceScale"
                                 v-validate="'numeric|min_value:0|max_value:100'"
@@ -122,12 +118,10 @@
                             custom-class="is-small"
                         >
                             <b-input
-                                type="number"
+                                type="text"
                                 icon="clock-outline"
                                 placeholder="0"
-                                step="1"
                                 size="is-small"
-                                min="0"
                                 v-model="data.delayedDosing"
                                 name="delayedDosing"
                                 v-validate="'numeric|min_value:0'"
