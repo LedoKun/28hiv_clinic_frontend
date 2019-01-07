@@ -108,6 +108,11 @@ export default {
             'submitAction',
             'loadAction'
         ]),
+        resetForm () {
+            document.getElementById('AppointmentForm').reset()
+            this.setDefaultAction()
+            this.errors.clear()
+        },
         confirmReset () {
             this.$dialog.confirm({
                 title: 'Reseting Appointment Form',
@@ -117,7 +122,7 @@ export default {
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: () => {
-                    document.getElementById('AppointmentForm').reset()
+                    this.resetForm()
                     this.$toast.open('Form Reseted!')
                 }
             })
@@ -136,8 +141,7 @@ export default {
                             position: 'is-bottom'
                         })
 
-                        self.setDefaultAction()
-                        self.errors.clear()
+                        self.resetForm()
                         self.loadAction()
                     } catch (error) {
                         // error

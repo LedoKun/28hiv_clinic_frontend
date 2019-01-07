@@ -133,6 +133,10 @@ let actions = {
             return Promise.reject(error)
         }
     },
+    editAction (contect, key) {
+        state.data = _.cloneDeep(state.investigation[key])
+        state.data.date = Moment(state.data.date).toDate()
+    },
     submitAction (context) {
         let hn = context.rootState.Patient.data.hn
 

@@ -1,6 +1,7 @@
 import instance from '@/utils/http'
 import urlEncode from '@/utils/urlEncode'
 import { getField, updateField } from 'vuex-map-fields'
+import Moment from 'moment'
 let _ = require('lodash')
 
 let initialState = {
@@ -61,6 +62,10 @@ let actions = {
         } catch (error) {
             return Promise.reject(error)
         }
+    },
+    editAction (contect, key) {
+        state.data = _.cloneDeep(state.previousAppointments[key])
+        state.data.date = Moment(state.data.date).toDate()
     },
     submitAction (context) {
         let hn = context.rootState.Patient.data.hn

@@ -65,10 +65,28 @@
             >{{ props.row.vaccination && props.row.vaccination.length > 0 ? props.row.vaccination.join(", ") : "" }}</b-table-column>
 
             <b-table-column field="actions" label>
-              <a
-                class="button is-danger is-small is-pulled-right"
-                @click="deleteData(props.row.id)"
-              >Delete</a>
+              <div class="is-pulled-right">
+                <a
+                  class="button is-info is-small"
+                  @click="editData(props.index)"
+                >
+                  <span class="icon">
+                      <b-icon
+                          icon="pencil"
+                      />
+                  </span>
+                </a>
+                <a
+                  class="button is-danger is-small"
+                  @click="deleteData(props.row.id)"
+                >
+                  <span class="icon">
+                      <b-icon
+                          icon="delete-outline"
+                      />
+                  </span>
+                </a>
+              </div>
             </b-table-column>
           </template>
 
@@ -99,7 +117,10 @@ export default {
     ...mapState("Visit", ["previousVisits"])
   },
   methods: {
-    ...mapActions("Visit", ["loadAction", "deleteAction"]),
+    ...mapActions("Visit", ["loadAction", "deleteAction", "editAction"]),
+    editData(key) {
+      this.editAction(key)
+    },
     deleteData(id) {
       let self = this;
 
@@ -133,6 +154,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
   margin-top: 2px;
-  font-size: 0.8em;
+  font-size: 0.7em;
 }
 </style>

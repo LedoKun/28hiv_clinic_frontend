@@ -27,10 +27,28 @@
             </b-table-column>
 
             <b-table-column field="actions" label>
-              <a
-                class="button is-danger is-small is-pulled-right"
-                @click="deleteData(props.row.id)"
-              >Delete</a>
+              <div class="is-pulled-right">
+                <a
+                  class="button is-info is-small"
+                  @click="editData(props.index)"
+                >
+                  <span class="icon">
+                      <b-icon
+                          icon="pencil"
+                      />
+                  </span>
+                </a>
+                <a
+                  class="button is-danger is-small"
+                  @click="deleteData(props.row.id)"
+                >
+                  <span class="icon">
+                      <b-icon
+                          icon="delete-outline"
+                      />
+                  </span>
+                </a>
+              </div>
             </b-table-column>
           </template>
 
@@ -82,7 +100,10 @@ export default {
     ...mapState("Investigation", ["investigation"])
   },
   methods: {
-    ...mapActions("Investigation", ["loadAction", "deleteAction"]),
+    ...mapActions("Investigation", ["loadAction", "deleteAction", "editAction"]),
+    editData(key) {
+      this.editAction(key)
+    },
     deleteData(id) {
       let self = this;
 

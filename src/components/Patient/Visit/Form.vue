@@ -154,6 +154,7 @@
                                 icon="label"
                                 placeholder="Add an impression..."
                                 @typing="debouncedICD10Filter"
+                                name="impression"
                                 v-validate="'required'"
                             />
                         </b-field>
@@ -313,7 +314,6 @@ export default {
             document.getElementById('VisitInfoForm').reset()
             this.setDefaultAction()
             this.errors.clear()
-            this.dateInput = null
         },
         confirmReset () {
             this.$dialog.confirm({
