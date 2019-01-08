@@ -130,26 +130,6 @@
 
                 <div class="columns">
 
-                    <!-- wbc -->
-                    <div class="column">
-                        <b-field
-                            label="WBC Count"
-                            :type="{'is-danger': errors.has('wbc')}"
-                            :message="errors.first('wbc')"
-                            custom-class="is-small"
-                        >
-                            <b-input
-                                type="text"
-                                placeholder="0"
-                                size="is-small"
-                                v-model="data.wbc"
-                                name="wbc"
-                                v-validate="'decimal:2|min_value:0'"
-                            />
-                        </b-field>
-                    </div>
-                    <!-- / wbc -->
-
                     <!-- hb -->
                     <div class="column">
                         <b-field
@@ -190,6 +170,26 @@
                         </b-field>
                     </div>
                     <!-- / hct -->
+
+                    <!-- wbc -->
+                    <div class="column">
+                        <b-field
+                            label="WBC Count"
+                            :type="{'is-danger': errors.has('wbc')}"
+                            :message="errors.first('wbc')"
+                            custom-class="is-small"
+                        >
+                            <b-input
+                                type="text"
+                                placeholder="0"
+                                size="is-small"
+                                v-model="data.wbc"
+                                name="wbc"
+                                v-validate="'decimal:2|min_value:0'"
+                            />
+                        </b-field>
+                    </div>
+                    <!-- / wbc -->
 
                     <!-- wbcPNeu -->
                     <div class="column">
