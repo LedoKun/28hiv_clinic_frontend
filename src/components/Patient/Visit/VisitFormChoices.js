@@ -5,6 +5,9 @@ export let contactTB = [
 ]
 export let arv = [
     'Atripla',
+    'GPO VIR S-30',
+    'GPO VIR S-40',
+    'GPO VIR Z-250',
     'Teno-EM',
     'Teevir',
     '3TC',
