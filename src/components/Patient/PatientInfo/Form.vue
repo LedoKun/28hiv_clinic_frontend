@@ -472,8 +472,9 @@ export default {
     },
     data: function () {
         return {
+            nationalities: getNames().unshift('Stateless Minorities'),
             selectOptions: {
-                nationalities: getNames(),
+                nationalities: this.nationalities,
                 sexes: [
                     'ชาย',
                     'หญิง',
