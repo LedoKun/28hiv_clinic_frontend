@@ -468,13 +468,17 @@ export default {
                 // something must have gone wrong
             })
 
+        },
+        allNationalities () {
+            let nationalities = getNames()           
+            nationalities.unshift('Stateless Minorities')
+            return nationalities
         }
     },
     data: function () {
         return {
-            nationalities: getNames().unshift('Stateless Minorities'),
             selectOptions: {
-                nationalities: this.nationalities,
+                nationalities: this.allNationalities(),
                 sexes: [
                     'ชาย',
                     'หญิง',
