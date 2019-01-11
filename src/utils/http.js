@@ -28,6 +28,10 @@ function requestSuccess(config) {
         if (value instanceof Date) {
             config.data[key] = formatDate(value)
         }
+
+        if (!value) {
+            config.data[key] = null
+        }
     })
 
     // set auth header
