@@ -10,14 +10,667 @@
             </b-icon>
         </a>
     </div>
-    <div class="card-content">
 
-        <!-- form area -->
-        <div class="content">
-            <form
-                @submit.prevent="validateData"
-                id="LabInfoForm"
-            >
+    <form
+        @submit.prevent="validateData"
+        id="LabInfoForm"
+    >
+
+        <div class="card-content">
+
+            <!-- form area -->
+            <div class="content">
+                <div class="quickadd">
+                    <header class="bd-header">
+                        <div class="bd-header-titles">
+                                    <p class="subtitle">
+                                        Quick Add
+                                    </p> 
+                        </div>
+                    </header>
+
+                    <div class="columns">
+                        <!-- date -->
+                        <div class="column">
+                            <b-field
+                                label="Investigation Date *"
+                                custom-class="is-small"
+                                :type="{'is-danger': errors.has('date')}"
+                                :message="errors.first('date')"
+                            >
+                                <b-datepicker
+                                    placeholder="เลือกวัน..."
+                                    icon="calendar-today"
+                                    size="is-small"
+                                    v-model="data.date"
+                                    name="date"
+                                    :max-date="new Date()"
+                                    v-validate="'required'"
+                                    editable
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / date -->
+
+                        <!-- vl -->
+                        <div class="column">
+                            <b-field
+                                label="VL (0, if undetectable)"
+                                :type="{'is-danger': errors.has('vl')}"
+                                :message="errors.first('vl')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    size="is-small"
+                                    v-model="data.vl"
+                                    name="vl"
+                                    v-validate="'numeric|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / vl -->
+
+                        <!-- cd4 -->
+                        <div class="column">
+                            <b-field
+                                label="CD4"
+                                :type="{'is-danger': errors.has('cd4')}"
+                                :message="errors.first('cd4')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0"
+                                    size="is-small"
+                                    v-model="data.cd4"
+                                    name="cd4"
+                                    v-validate="'numeric|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / cd4 -->
+
+                        <!-- pCD4 -->
+                        <div class="column">
+                            <b-field
+                                label="%CD4"
+                                :type="{'is-danger': errors.has('pCD4')}"
+                                :message="errors.first('pCD4')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.pCD4"
+                                    name="pCD4"
+                                    v-validate="'decimal:2|min_value:0|max_value:100'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / pCD4 -->
+                    </div>
+
+                    <div class="columns">
+                        <!-- hb -->
+                        <div class="column">
+                            <b-field
+                                label="Hb"
+                                :type="{'is-danger': errors.has('hb')}"
+                                :message="errors.first('hb')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.hb"
+                                    name="hb"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / hb -->
+
+                        <!-- hct -->
+                        <div class="column">
+                            <b-field
+                                label="Hct"
+                                :type="{'is-danger': errors.has('hct')}"
+                                :message="errors.first('hct')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.hct"
+                                    name="hct"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / hct -->
+
+                        <!-- wbc -->
+                        <div class="column">
+                            <b-field
+                                label="WBC"
+                                :type="{'is-danger': errors.has('wbc')}"
+                                :message="errors.first('wbc')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0"
+                                    size="is-small"
+                                    v-model="data.wbc"
+                                    name="wbc"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / wbc -->
+
+                        <!-- wbcPNeu -->
+                        <div class="column">
+                            <b-field
+                                label="%Neu"
+                                :type="{'is-danger': errors.has('wbcPNeu')}"
+                                :message="errors.first('wbcPNeu')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.wbcPNeu"
+                                    name="wbcPNeu"
+                                    v-validate="'decimal:2|min_value:0|max_value:100'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / wbcPNeu -->
+
+                        <!-- wbcPEos -->
+                        <div class="column">
+                            <b-field
+                                label="%Eos"
+                                :type="{'is-danger': errors.has('wbcPEos')}"
+                                :message="errors.first('wbcPEos')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.wbcPEos"
+                                    name="wbcPEos"
+                                    v-validate="'decimal:2|min_value:0|max_value:100'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / wbcPEos -->
+
+                        <!-- wbcPBasos -->
+                        <div class="column">
+                            <b-field
+                                label="%Basos"
+                                :type="{'is-danger': errors.has('wbcPBasos')}"
+                                :message="errors.first('wbcPBasos')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.wbcPBasos"
+                                    name="wbcPBasos"
+                                    v-validate="'decimal:2|min_value:0|max_value:100'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / wbcPBasos -->
+
+                        <!-- wbcPLym -->
+                        <div class="column">
+                            <b-field
+                                label="%Lym"
+                                :type="{'is-danger': errors.has('wbcPLym')}"
+                                :message="errors.first('wbcPLym')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.wbcPLym"
+                                    name="wbcPLym"
+                                    v-validate="'decimal:2|min_value:0|max_value:100'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / wbcPLym -->
+
+                        <!-- wbcPMono -->
+                        <div class="column">
+                            <b-field
+                                label="%Mono"
+                                :type="{'is-danger': errors.has('wbcPMono')}"
+                                :message="errors.first('wbcPMono')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    icon="percent"
+                                    size="is-small"
+                                    v-model="data.wbcPMono"
+                                    name="wbcPMono"
+                                    v-validate="'decimal:2|min_value:0|max_value:100'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / wbcPMono -->
+
+                    </div>
+
+                    <div class="columns">
+                        <!-- fbs -->
+                        <div class="column">
+                            <b-field
+                                label="FBS"
+                                :type="{'is-danger': errors.has('fbs')}"
+                                :message="errors.first('fbs')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0"
+                                    size="is-small"
+                                    v-model="data.fbs"
+                                    name="fbs"
+                                    v-validate="'numeric|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / fbs -->
+
+                        <!-- chol -->
+                        <div class="column">
+                            <b-field
+                                label="Cholesterol"
+                                :type="{'is-danger': errors.has('chol')}"
+                                :message="errors.first('chol')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0"
+                                    size="is-small"
+                                    v-model="data.chol"
+                                    name="chol"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / chol -->
+
+                        <!-- tg -->
+                        <div class="column">
+                            <b-field
+                                label="TG"
+                                :type="{'is-danger': errors.has('tg')}"
+                                :message="errors.first('tg')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0"
+                                    size="is-small"
+                                    v-model="data.tg"
+                                    name="tg"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / tg -->
+                    </div>
+
+                    <div class="columns">
+                        <!-- cr -->
+                        <div class="column">
+                            <b-field
+                                label="Cr"
+                                :type="{'is-danger': errors.has('cr')}"
+                                :message="errors.first('cr')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.cr"
+                                    name="cr"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / cr -->
+
+                        <!-- alt -->
+                        <div class="column">
+                            <b-field
+                                label="ALT"
+                                :type="{'is-danger': errors.has('alt')}"
+                                :message="errors.first('alt')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.alt"
+                                    name="alt"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / alt -->
+
+                        <!-- na -->
+                        <div class="column">
+                            <b-field
+                                label="Na"
+                                :type="{'is-danger': errors.has('na')}"
+                                :message="errors.first('na')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.na"
+                                    name="na"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / na -->
+
+                        <!-- k -->
+                        <div class="column">
+                            <b-field
+                                label="K"
+                                :type="{'is-danger': errors.has('k')}"
+                                :message="errors.first('k')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.k"
+                                    name="k"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / k -->
+
+                        <!-- cl -->
+                        <div class="column">
+                            <b-field
+                                label="Cl"
+                                :type="{'is-danger': errors.has('cl')}"
+                                :message="errors.first('cl')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.cl"
+                                    name="cl"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / cl -->
+
+                        <!-- hco3 -->
+                        <div class="column">
+                            <b-field
+                                label="HCO3"
+                                :type="{'is-danger': errors.has('hco3')}"
+                                :message="errors.first('hco3')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.hco3"
+                                    name="hco3"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / hco3 -->
+
+                        <!-- po4 -->
+                        <div class="column">
+                            <b-field
+                                label="PO4"
+                                :type="{'is-danger': errors.has('po4')}"
+                                :message="errors.first('po4')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0.00"
+                                    size="is-small"
+                                    v-model="data.po4"
+                                    name="po4"
+                                    v-validate="'decimal:2|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / po4 -->
+                    </div>
+
+                    <div class="columns">
+                        <!-- antiHIV -->
+                        <div class="column">
+                            <b-field
+                                label="Anti-HIV"
+                                custom-class="is-small"
+                            >
+                                <b-select
+                                    placeholder="เลือก..."
+                                    v-model="data.antiHIV"
+                                    size="is-small"
+                                    name="antiHIV"
+                                    expanded
+                                >
+                                    <option
+                                        v-for="(item, key) in IxOptions.positiveAndNegative"
+                                        :value="item"
+                                        :key="key"
+                                    >
+                                        {{ item }}
+                                    </option>
+                                </b-select>
+                            </b-field>
+                        </div>
+                        <!-- / antiHIV -->
+
+                        <!-- HBsAg -->
+                        <div class="column">
+                            <b-field
+                                label="HBsAg"
+                                custom-class="is-small"
+                            >
+                                <b-select
+                                    placeholder="เลือก..."
+                                    v-model="data.hbsag"
+                                    size="is-small"
+                                    name="hbsag"
+                                    expanded
+                                >
+                                    <option
+                                        v-for="(item, key) in IxOptions.positiveAndNegative"
+                                        :value="item"
+                                        :key="key"
+                                    >
+                                        {{ item }}
+                                    </option>
+                                </b-select>
+                            </b-field>
+                        </div>
+                        <!-- / HBsAg -->
+
+                        <!-- antiHBs -->
+                        <div class="column">
+                            <b-field
+                                label="Anti-HBs"
+                                custom-class="is-small"
+                            >
+                                <b-select
+                                    placeholder="เลือก..."
+                                    v-model="data.antiHBs"
+                                    size="is-small"
+                                    name="antiHBs"
+                                    expanded
+                                >
+                                    <option
+                                        v-for="(item, key) in IxOptions.positiveAndNegative"
+                                        :value="item"
+                                        :key="key"
+                                    >
+                                        {{ item }}
+                                    </option>
+                                </b-select>
+                            </b-field>
+                        </div>
+                        <!-- / antiHBs -->
+
+                        <!-- antiHCV -->
+                        <div class="column">
+                            <b-field
+                                label="Anti-HCV"
+                                custom-class="is-small"
+                            >
+                                <b-select
+                                    placeholder="เลือก..."
+                                    v-model="data.antiHCV"
+                                    size="is-small"
+                                    name="antiHCV"
+                                    expanded
+                                >
+                                    <option
+                                        v-for="(item, key) in IxOptions.positiveAndNegative"
+                                        :value="item"
+                                        :key="key"
+                                    >
+                                        {{ item }}
+                                    </option>
+                                </b-select>
+                            </b-field>
+                        </div>
+                        <!-- / antiHCV -->
+
+                        <!-- vdrl -->
+                        <div class="column">
+                            <b-field
+                                label="VDRL"
+                                custom-class="is-small"
+                            >
+                                <b-select
+                                    placeholder="เลือก..."
+                                    v-model="data.vdrl"
+                                    size="is-small"
+                                    name="vdrl"
+                                    expanded
+                                >
+                                    <option
+                                        v-for="(item, key) in IxOptions.positiveAndNegative"
+                                        :value="item"
+                                        :key="key"
+                                    >
+                                        {{ item }}
+                                    </option>
+                                </b-select>
+                            </b-field>
+                        </div>
+                        <!-- / vdrl -->
+
+                        <!-- rpr -->
+                        <div class="column">
+                            <b-field
+                                label="RPR"
+                                :type="{'is-danger': errors.has('rpr')}"
+                                :message="errors.first('rpr')"
+                                custom-class="is-small"
+                            >
+                                <div class="field has-addons">
+                                    <p class="control">
+                                        <a class="button is-static is-small">
+                                            1 :
+                                        </a>
+                                    </p>
+                                    <p class="control full-width-input">
+                                        <b-input
+                                            type="text"
+                                            placeholder="0"
+                                            size="is-small"
+                                            v-model="data.rpr"
+                                            name="rpr"
+                                            v-validate="'numeric|min_value:0'"
+                                        />
+                                    </p>
+                                </div>
+                            </b-field>
+                        </div>
+                        <!-- / rpr -->
+
+                        <!-- cryptoAg blood -->
+                        <div class="column">
+                            <b-field
+                                label="Crypto-Ag (Blood)"
+                                custom-class="is-small"
+                            >
+                                <b-select
+                                    placeholder="เลือก..."
+                                    v-model="data.cryptoAgBlood"
+                                    size="is-small"
+                                    name="cryptoAgBlood"
+                                    expanded
+                                >
+                                    <option
+                                        v-for="(item, key) in IxOptions.positiveAndNegative"
+                                        :value="item"
+                                        :key="key"
+                                    >
+                                        {{ item }}
+                                    </option>
+                                </b-select>
+                            </b-field>
+                        </div>
+                        <!-- / cryptoAg blood -->
+
+                    </div>
+
+                    <hr style="margin: 0 0 3rem;">
+                </div>
+
                 <div class="columns">
                     <!-- date -->
                     <div class="column">
@@ -174,7 +827,7 @@
                     <!-- wbc -->
                     <div class="column">
                         <b-field
-                            label="WBC Count"
+                            label="WBC"
                             :type="{'is-danger': errors.has('wbc')}"
                             :message="errors.first('wbc')"
                             custom-class="is-small"
@@ -274,6 +927,27 @@
                         </b-field>
                     </div>
                     <!-- / wbcPBasos -->
+
+                    <!-- wbcPMono -->
+                    <div class="column">
+                        <b-field
+                            label="%Mono"
+                            :type="{'is-danger': errors.has('wbcPMono')}"
+                            :message="errors.first('wbcPMono')"
+                            custom-class="is-small"
+                        >
+                            <b-input
+                                type="text"
+                                placeholder="0.00"
+                                icon="percent"
+                                size="is-small"
+                                v-model="data.wbcPMono"
+                                name="wbcPMono"
+                                v-validate="'decimal:2|min_value:0|max_value:100'"
+                            />
+                        </b-field>
+                    </div>
+                    <!-- / wbcPMono -->
 
                 </div>
 
@@ -563,45 +1237,26 @@
                     </div>
                     <!-- / urine_glucose -->
 
-                    <!-- urine_prot -->
+                    <!-- urine_prot_cr_ratio -->
                     <div class="column">
                         <b-field
-                            label="Urine Prot"
-                            :type="{'is-danger': errors.has('urine_prot')}"
-                            :message="errors.first('urine_prot')"
+                            label="UP/UC"
+                            :type="{'is-danger': errors.has('urine_prot_cr_ratio')}"
+                            :message="errors.first('urine_prot_cr_ratio')"
                             custom-class="is-small"
                         >
                             <b-input
                                 type="text"
                                 placeholder="0.00"
                                 size="is-small"
-                                v-model="data.urine_prot"
-                                name="urine_prot"
+                                v-model="data.urine_prot_cr_ratio"
+                                name="urine_prot_cr_ratio"
                                 v-validate="'decimal:2|min_value:0'"
                             />
                         </b-field>
                     </div>
-                    <!-- / urine_prot -->
+                    <!-- / urine_prot_cr_ratio -->
 
-                    <!-- urine_cr -->
-                    <div class="column">
-                        <b-field
-                            label="Urine Cr"
-                            :type="{'is-danger': errors.has('urine_cr')}"
-                            :message="errors.first('urine_cr')"
-                            custom-class="is-small"
-                        >
-                            <b-input
-                                type="text"
-                                placeholder="0.00"
-                                size="is-small"
-                                v-model="data.urine_cr"
-                                name="urine_cr"
-                                v-validate="'decimal:2|min_value:0'"
-                            />
-                        </b-field>
-                    </div>
-                    <!-- / urine_cr -->
                 </div>
 
                 <div class="columns">
@@ -1252,11 +1907,12 @@
 
                 </div>
 
-            </form>
-        </div>
-        <!-- / form area -->
+            </div>
+            <!-- / form area -->
 
-    </div>
+        </div>
+
+    </form>
 
     <div class="card-footer">
         <a
@@ -1381,5 +2037,11 @@ export default {
 <style scoped>
 .full-width-input {
     width: 100%;
+}
+.quickadd header {
+    padding-bottom: 1em;
+}
+.quickadd {
+    padding-bottom: 0.5em;
 }
 </style>

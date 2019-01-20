@@ -20,6 +20,7 @@ let initialState = {
         wbcPLym: null,
         wbcPEos: null,
         wbcPBasos: null,
+        wbcPMono: null,
 
         bun: null,
         cr: null,
@@ -38,8 +39,7 @@ let initialState = {
         urine_glucose_dipstick: null,
         urine_prot_dipstick: null,
         urine_glucose: null,
-        urine_prot: null,
-        urine_cr: null,
+        urine_prot_cr_ratio: null,
 
         chol: null,
         tg: null,

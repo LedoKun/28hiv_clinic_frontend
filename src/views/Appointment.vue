@@ -89,7 +89,7 @@
                                     </b-table-column>
 
                                     <b-table-column field="appointmentFor" label="สาเหตุการนัด" class="dataField">
-                                        {{ props.row.patient.appointmentFor }}
+                                        {{ props.row.appointmentFor }}
                                     </b-table-column>
 
                                     <b-table-column field="tel" label="โทร" class="dataField">
