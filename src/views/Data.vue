@@ -6,67 +6,110 @@
         </div>
     </div>
 
-    <div class="columns" v-if="isReady">
-        <div class="column">
-            <Table
-                :header="'Sex-Gender-Age'"
-                :data="tables.df_groupby_age"
-            />
+    <div v-if="isReady">
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'Sex-Gender-Age'"
+                    :data="tables.df_groupby_age"
+                />
+            </div>
+
+            <div class="column">
+                <Table
+                    :header="'Sex-Gender-Age (Thais)'"
+                    :data="tables.df_thais_groupby_age"
+                />
+            </div>
+
+            <div class="column">
+                <Table
+                    :header="'Sex-Gender-Age (Non-Thai)'"
+                    :data="tables.df_non_thai_groupby_age"
+                />
+            </div>
         </div>
 
-        <div class="column">
-            <Table
-                :header="'Sex-Gender-Age (Thais)'"
-                :data="tables.df_thais_groupby_age"
-            />
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'สิทธิ์การรักษา (คนไทย)'"
+                    :data="tables.df_thais_groupby_payer"
+                />
+            </div>
+            
+            <div class="column">
+                <Table
+                    :header="'สิทธิ์การรักษา (คนต่างชาติ)'"
+                    :data="tables.df_non_thai_groupby_payer"
+                />
+            </div>
         </div>
 
-        <div class="column">
-            <Table
-                :header="'Sex-Gender-Age (Non-Thai)'"
-                :data="tables.df_non_thai_groupby_age"
-            />
-        </div>
-    </div>
-
-    <div class="columns" v-if="isReady">
-        <div class="column">
-            <Table
-                :header="'สิทธิ์การรักษา (คนไทย)'"
-                :data="tables.df_thais_groupby_payer"
-            />
-        </div>
-        
-        <div class="column">
-            <Table
-                :header="'สิทธิ์การรักษา (คนต่างชาติ)'"
-                :data="tables.df_non_thai_groupby_payer"
-            />
-        </div>
-    </div>
-
-    <div class="columns" v-if="isReady">
-        <div class="column">
-            <Table
-                :header="'Referral Status'"
-                :data="tables.df_isRefer"
-            />
-        </div>
-    </div>
-
-    <div class="columns" v-if="isReady">
-        <div class="column">
-            <Table
-                :header="'ผู้ป่วยรายใหม่'"
-                :data="tables.df_new_patient_by_months"
-            />
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'Referral Status'"
+                    :data="tables.df_isRefer"
+                />
+            </div>
         </div>
 
-        <div class="column">
-            <Table
-                :header="'จำนวนครั้งที่ผู้ป่วยที่มาพบแพทย์ทั้งหมด'"
-                :data="tables.df_all_visits_by_months"
-            />
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'ผู้ป่วยรายใหม่'"
+                    :data="tables.df_new_patient_by_months"
+                />
+            </div>
+
+            <div class="column">
+                <Table
+                    :header="'จำนวนครั้งที่ผู้ป่วยที่มาพบแพทย์ทั้งหมด'"
+                    :data="tables.df_all_visits_by_months"
+                />
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'การวินิจฉัยโรค'"
+                    :data="tables.df_impression"
+                />
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'ARV Regimens'"
+                    :data="tables.df_arv"
+                />
+            </div>
+
+            <div class="column">
+                <Table
+                    :header="'OI Medications That Are Currently Prescribed'"
+                    :data="tables.df_oiProphylaxis"
+                />
+            </div>
+
+            <div class="column">
+                <Table
+                    :header="'Vaccinations'"
+                    :data="tables.df_vaccination"
+                />
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'Anti-TB Medication Regimens'"
+                    :data="tables.df_antiTB"
+                />
+            </div>
         </div>
 
     </div>
