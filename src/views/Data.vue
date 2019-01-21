@@ -99,7 +99,7 @@
 
             <div class="column">
                 <Table
-                    :header="'OI Medications That Are Currently Prescribed'"
+                    :header="'# of Patients On OI Medications'"
                     :data="tables.df_oiProphylaxis"
                 />
             </div>
