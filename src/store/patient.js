@@ -10,6 +10,7 @@ let initialState = {
         gid: null,
         cid: null,
         nap: null,
+        patientStatus: null,
         name: null,
         dob: null,
         sex: null,
@@ -57,6 +58,19 @@ let actions = {
         context.commit('setDefault')
     },
     async submitAction(context) {
+        // delete un-needed keys
+        if (state.data['visits']) {
+            delete state.data['visits']
+        }
+
+        if (state.data['investigation']) {
+            delete state.data['investigation']
+        }
+
+        if (state.data['appointments']) {
+            delete state.data['appointments']
+        }
+
         try {
             let response = await instance({
                 url: 'patient',

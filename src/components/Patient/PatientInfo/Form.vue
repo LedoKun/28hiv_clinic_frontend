@@ -71,6 +71,36 @@
                         </b-field>
                     </div>
                     <!-- / nap -->
+
+                    <!-- patientStatus -->
+                    <div class="column">
+                        <b-field
+                            label="สถานะของผู้ป่วย *"
+                            :type="{'is-danger': errors.has('patientStatus')}"
+                            :message="errors.first('patientStatus')"
+                            custom-class="is-small"
+                        >
+                            <b-select
+                                placeholder="เลือก..."
+                                v-model="data.patientStatus"
+                                size="is-small"
+                                name="patientStatus"
+                                v-validate="'required'"
+                                expanded
+                            >
+                                <option
+                                    v-for="(item, key) in selectOptions.patientStatus"
+                                    :value="item"
+                                    :key="key"
+                                >
+                                    {{ item }}
+                                </option>
+                            </b-select>
+                        </b-field>
+                        
+                    </div>
+                    <!-- / patientStatus -->
+
                 </div>
 
                 <div class="columns">
@@ -523,6 +553,14 @@ export default {
                     'ผู้ป่วยใหม่',
                     'ผู้ป่วยรับโอน (ยังไม่เริ่ม ARV)',
                     'ผู้ป่วยรับโอน (เริ่ม ARV แล้ว)'
+                ],
+                patientStatus: [
+                    'รักษาต่อเนื่อง',
+                    'ส่งตัว/รับการรักษาที่สภานพยาบาลอื่น ในประเทศไทย',
+                    'ส่งตัว/รับการรักษาที่สภานพยาบาลอื่น ในต่างประเทศ',
+                    'ถูกส่งกลับประเทศ',
+                    'ขาดการติดต่อ',
+                    'เสียชีวิต' 
                 ]
             }
         }
