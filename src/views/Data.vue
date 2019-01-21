@@ -121,6 +121,22 @@
             </div>
         </div>
 
+        <div class="columns">
+            <div class="column">
+                <Table
+                    :header="'CD4 (Initially)'"
+                    :data="tables.df_init_cd4"
+                />
+            </div>
+
+            <div class="column">
+                <Table
+                    :header="'CD4 (Lastest)'"
+                    :data="tables.df_cd4"
+                />
+            </div>
+        </div>
+
     </div>
 
 </div>
