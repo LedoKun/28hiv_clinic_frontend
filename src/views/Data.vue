@@ -58,6 +58,15 @@
         <div class="columns">
             <div class="column">
                 <Table
+                    :header="'Patient Status'"
+                    :data="tables.df_count_patient_status"
+                />
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column">
+                <Table
                     :header="'ผู้ป่วยรายใหม่'"
                     :data="tables.df_new_patient_by_months"
                 />
