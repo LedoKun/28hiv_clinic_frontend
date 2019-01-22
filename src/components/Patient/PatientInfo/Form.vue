@@ -72,48 +72,6 @@
                     </div>
                     <!-- / nap -->
 
-                    <!-- patientStatus -->
-                    <div class="column">
-                        <b-field
-                            label="สถานะของผู้ป่วย *"
-                            :type="{'is-danger': errors.has('patientStatus')}"
-                            :message="errors.first('patientStatus')"
-                            custom-class="is-small"
-                        >
-                            <b-select
-                                placeholder="เลือก..."
-                                v-model="data.patientStatus"
-                                size="is-small"
-                                name="patientStatus"
-                                v-validate="'required'"
-                                expanded
-                            >
-                                <option
-                                    v-for="(item, key) in selectOptions.patientStatus"
-                                    :value="item"
-                                    :key="key"
-                                >
-                                    {{ item }}
-                                </option>
-                            </b-select>
-                        </b-field>
-                        
-                    </div>
-                    <!-- / patientStatus -->
-
-                    <!-- referOutTo -->
-                    <div class="column">
-                        <b-field
-                            label="F/U At"
-                            :type="{'is-danger': errors.has('referOutTo')}"
-                            :message="errors.first('referOutTo')"
-                            custom-class="is-small"
-                        >
-                            <b-input size="is-small" v-model="data.name" name="referOutTo" v-validate="'required|min:2'" />
-                        </b-field>
-                    </div>
-                    <!-- / referOutTo -->
-
                 </div>
 
                 <div class="columns">
@@ -360,6 +318,49 @@
                 </div>
 
                 <div class="columns">
+
+                    <!-- patientStatus -->
+                    <div class="column">
+                        <b-field
+                            label="สถานะของผู้ป่วย *"
+                            :type="{'is-danger': errors.has('patientStatus')}"
+                            :message="errors.first('patientStatus')"
+                            custom-class="is-small"
+                        >
+                            <b-select
+                                placeholder="เลือก..."
+                                v-model="data.patientStatus"
+                                size="is-small"
+                                name="patientStatus"
+                                v-validate="'required'"
+                                expanded
+                            >
+                                <option
+                                    v-for="(item, key) in selectOptions.patientStatus"
+                                    :value="item"
+                                    :key="key"
+                                >
+                                    {{ item }}
+                                </option>
+                            </b-select>
+                        </b-field>
+                        
+                    </div>
+                    <!-- / patientStatus -->
+
+                    <!-- referOutTo -->
+                    <div class="column">
+                        <b-field
+                            label="รักษาตัวที่..."
+                            :type="{'is-danger': errors.has('referOutTo')}"
+                            :message="errors.first('referOutTo')"
+                            custom-class="is-small"
+                        >
+                            <b-input size="is-small" v-model="data.referOutTo" name="referOutTo" v-validate="'required|min:2'" />
+                        </b-field>
+                    </div>
+                    <!-- / referOutTo -->
+
                     <!-- tel -->
                     <div class="column">
                         <b-field
