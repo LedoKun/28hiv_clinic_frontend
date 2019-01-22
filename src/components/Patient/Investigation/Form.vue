@@ -23,9 +23,9 @@
                 <div class="quickadd">
                     <header class="bd-header">
                         <div class="bd-header-titles">
-                                    <p class="subtitle">
-                                        Quick Add
-                                    </p> 
+                            <p class="subtitle">
+                                Quick Add
+                            </p> 
                         </div>
                     </header>
 
@@ -71,26 +71,6 @@
                         </div>
                         <!-- / vl -->
 
-                        <!-- cd4 -->
-                        <div class="column">
-                            <b-field
-                                label="CD4"
-                                :type="{'is-danger': errors.has('cd4')}"
-                                :message="errors.first('cd4')"
-                                custom-class="is-small"
-                            >
-                                <b-input
-                                    type="text"
-                                    placeholder="0"
-                                    size="is-small"
-                                    v-model="data.cd4"
-                                    name="cd4"
-                                    v-validate="'numeric|min_value:0'"
-                                />
-                            </b-field>
-                        </div>
-                        <!-- / cd4 -->
-
                         <!-- pCD4 -->
                         <div class="column">
                             <b-field
@@ -111,6 +91,26 @@
                             </b-field>
                         </div>
                         <!-- / pCD4 -->
+
+                        <!-- cd4 -->
+                        <div class="column">
+                            <b-field
+                                label="CD4"
+                                :type="{'is-danger': errors.has('cd4')}"
+                                :message="errors.first('cd4')"
+                                custom-class="is-small"
+                            >
+                                <b-input
+                                    type="text"
+                                    placeholder="0"
+                                    size="is-small"
+                                    v-model="data.cd4"
+                                    name="cd4"
+                                    v-validate="'numeric|min_value:0'"
+                                />
+                            </b-field>
+                        </div>
+                        <!-- / cd4 -->
                     </div>
 
                     <div class="columns">

@@ -11,6 +11,7 @@ let initialState = {
         cid: null,
         nap: null,
         patientStatus: null,
+        referOutTo: null,
         name: null,
         dob: null,
         sex: null,

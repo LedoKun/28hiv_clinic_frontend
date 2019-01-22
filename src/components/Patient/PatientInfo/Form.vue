@@ -101,6 +101,19 @@
                     </div>
                     <!-- / patientStatus -->
 
+                    <!-- referOutTo -->
+                    <div class="column">
+                        <b-field
+                            label="F/U At"
+                            :type="{'is-danger': errors.has('referOutTo')}"
+                            :message="errors.first('referOutTo')"
+                            custom-class="is-small"
+                        >
+                            <b-input size="is-small" v-model="data.name" name="referOutTo" v-validate="'required|min:2'" />
+                        </b-field>
+                    </div>
+                    <!-- / referOutTo -->
+
                 </div>
 
                 <div class="columns">
