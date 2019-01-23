@@ -356,7 +356,7 @@
                             :message="errors.first('referOutTo')"
                             custom-class="is-small"
                         >
-                            <b-input size="is-small" v-model="data.referOutTo" name="referOutTo" v-validate="'required|min:2'" />
+                            <b-input size="is-small" v-model="data.referOutTo" name="referOutTo" v-validate="'min:2'" />
                         </b-field>
                     </div>
                     <!-- / referOutTo -->
