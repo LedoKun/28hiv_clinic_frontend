@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style scoped>
-.card {
+/* .card {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
   margin-bottom: 2rem;
 }
@@ -53,5 +53,17 @@ export default {
 }
 .card-table {
   overflow-y: auto;
+} */
+
+.card {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+    margin-bottom: 2rem;
+}
+.card-header-title {
+    color: #8F99A3;
+    font-weight: 400;
+}
+.card .content {
+    font-size: 14px;
 }
 </style>
