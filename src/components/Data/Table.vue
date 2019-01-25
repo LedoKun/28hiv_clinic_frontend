@@ -63,7 +63,7 @@ export default {
     color: #8F99A3;
     font-weight: 400;
 }
-.card .content {
+.card .content .table  {
     font-size: 14px;
 }
 </style>
