@@ -1,5 +1,6 @@
 <template>
 <div class="container">
+
     <div class="columns">
         <div class="column">
             <AllPatients />
@@ -121,6 +122,15 @@
             </div>
         </div>
 
+        <div
+            v-for="(year, key) in tables.days_start_arv_yearly"
+            :key="key"
+        >
+            <YearlyStats
+                :data="year"
+            />
+        </div>
+
         <div class="columns">
             <div class="column">
                 <Table
@@ -138,12 +148,12 @@
         </div>
 
     </div>
-
 </div>
 </template>
 
 <script>
 import AllPatients from '../components/Data/AllPatients'
+import YearlyStats from '../components/Data/YealyStats.vue'
 import Table from '../components/Data/Table'
 import instance from '@/utils/http'
 
@@ -151,6 +161,7 @@ export default {
     name: 'Data',
     components: {
         AllPatients,
+        YearlyStats,
         Table
     },
     mounted() {
@@ -184,5 +195,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.card-table {
+  margin: 2px auto 20px auto;
+  font-size: 0.8em;
+}
+.columnsToggle {
+  margin: auto 15px auto 15px;
+  padding-bottom: 10px;
+}
+.card {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+    margin-bottom: 2rem;
+}
+.card-header-title {
+    color: #8F99A3;
+    font-weight: 400;
+}
 </style>

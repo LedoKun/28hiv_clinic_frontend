@@ -1,6 +1,6 @@
 import store from '../store'
 import { Toast } from 'buefy/dist/components/toast'
-import axiosRetry from 'axios-retry';
+import axiosRetry from 'axios-retry'
 
 let _ = require('lodash')
 let axios = require('axios')
