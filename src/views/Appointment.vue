@@ -3,22 +3,16 @@
     <div class="columns">
         <!-- select date -->
         <div class="column is-4">
-            <form>
-                <b-field
-                    label="เลือกวันที่"
-                >
-                    <b-datepicker
-                        inline
-                        placeholder="เลือกวัน..."
-                        icon="calendar-today"
-                        size="is-small"
-                        v-model="dateSelected"
-                        name="date"
-                        editable
-                    >
-                    </b-datepicker>
-                </b-field>
-            </form>
+            <b-datepicker
+                inline
+                placeholder="เลือกวัน..."
+                icon="calendar-today"
+                size="is-small"
+                v-model="dateSelected"
+                name="date"
+                editable
+                class="has-text-centered"
+            />
         </div>
         <!-- /select date -->
 
