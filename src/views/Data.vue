@@ -126,26 +126,18 @@
             v-for="(year, key) in tables.days_start_arv_yearly"
             :key="key"
         >
-            <YearlyStats
+            <DataWithStats
                 :data="year"
             />
         </div>
 
-        <div class="columns">
-            <div class="column">
-                <Table
-                    :header="'CD4 (Initially)'"
-                    :data="tables.df_init_cd4"
-                />
-            </div>
+        <DataWithStats
+            :data="tables.init_cd4"
+        />
 
-            <div class="column">
-                <Table
-                    :header="'CD4 (Lastest)'"
-                    :data="tables.df_cd4"
-                />
-            </div>
-        </div>
+        <DataWithStats
+            :data="tables.cd4"
+        />
 
     </div>
 </div>
@@ -153,7 +145,7 @@
 
 <script>
 import AllPatients from '../components/Data/AllPatients'
-import YearlyStats from '../components/Data/YealyStats.vue'
+import DataWithStats from '../components/Data/DataWithStats.vue'
 import Table from '../components/Data/Table'
 import instance from '@/utils/http'
 
@@ -161,7 +153,7 @@ export default {
     name: 'Data',
     components: {
         AllPatients,
-        YearlyStats,
+        DataWithStats,
         Table
     },
     mounted() {

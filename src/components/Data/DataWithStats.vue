@@ -3,7 +3,7 @@
     <div class="column">
         <Table
             :header="data.header"
-            :data="data.df_binned_timedelta"
+            :data="data.df_data"
         />
     </div>
 
@@ -20,7 +20,7 @@
 import Table from './Table.vue'
 
 export default {
-    name: 'YearlyStats',
+    name: 'DataWithStats',
     components: {
         Table
     },
