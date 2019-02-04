@@ -292,26 +292,21 @@ export default {
 </script>
 
 <style scoped>
+.card-table {
+  margin: 2px auto 20px auto;
+  font-size: 0.8em;
+}
+.columnsToggle {
+  margin: auto 15px auto 15px;
+  padding-bottom: 10px;
+}
 .card {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
-  margin-bottom: 2rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+    margin-bottom: 2rem;
 }
 .card-header-title {
-  color: #8F99A3;
-  font-weight: 400;
-}
-.card .content {
-  font-size: 14px;
-}
-.table {
-    width: 98%;
-    margin-left:auto; 
-    margin-right:auto;
-    margin-top: 2px;
-}
-.card-table {
-  max-height: 350px;
-  overflow-y: auto;
+    color: #8F99A3;
+    font-weight: 400;
 }
 .table .smallField {
     width: 15%;

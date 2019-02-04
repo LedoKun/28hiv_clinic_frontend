@@ -37,9 +37,6 @@ let mutations = {
         state.previousVisits = []
     },
     loadData(state, payload) {
-        // Change date to date object
-        let dateData = Moment(payload.date)
-        payload.date = dateData.isValid ? dateData.toDate() : null
         state.previousVisits = payload
     }
 }

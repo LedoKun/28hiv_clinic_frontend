@@ -533,6 +533,7 @@ export default {
                     'Heterosexual',
                     'Homosexual',
                     'Bisexual',
+                    'Transgender',
                     '-'
                 ],
                 marital: [
