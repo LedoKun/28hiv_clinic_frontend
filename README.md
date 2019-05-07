@@ -1,4 +1,9 @@
-# frontend
+# Frontend for HIV Clinic at 28th Public Health Center
+
+## Requirements
+* The frontend requires the following dependencies:
+    * yarn
+    * nodejs
 
 ## Project setup
 ```
@@ -9,6 +14,7 @@ yarn install
 ```
 yarn run serve
 ```
+Please note that the dev server is equibed with a proxy for the backend server, and the backend can be accessed at '/api'.
 
 ### Compiles and minifies for production
 ```
