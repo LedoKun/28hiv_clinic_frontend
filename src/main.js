@@ -7,6 +7,7 @@ import Config from '@/config.js'
 import _ from 'lodash'
 import moment from 'moment'
 import Buefy from 'buefy'
+import VeeValidate from 'vee-validate'
 import VueFormly from 'vue-formly'
 import VueFormlyBuefy from 'vue-formly-buefy'
 
@@ -36,6 +37,9 @@ Vue.use(Buefy, {
 // vue-formly-buefy
 Vue.use(VueFormly)
 Vue.use(VueFormlyBuefy)
+
+// VeeValidate
+Vue.use(VeeValidate)
 
 Vue.config.productionTip = true
 

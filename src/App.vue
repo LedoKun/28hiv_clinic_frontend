@@ -51,4 +51,7 @@ html {
 .columns.is-fullheight .column {
   overflow-y: auto;
 }
+.level {
+  padding-bottom: 1rem;
+}
 </style>

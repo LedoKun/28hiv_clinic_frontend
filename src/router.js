@@ -7,9 +7,10 @@ import AllPatients from './views/AllPatients.vue'
 import Appointments from './views/Appointments.vue'
 
 import PatientSummary from './views/PatientSummary.vue'
-// import PatientDermographic from './views/PatientDermographic.vue'
-// import PatientVisit from './views/PatientVisit.vue'
-// import PatientInvestigation from './views/PatientInvestigation.vue'
+import PatientDermographic from './views/PatientDermographic.vue'
+import PatientVisit from './views/PatientVisit.vue'
+import PatientInvestigation from './views/PatientInvestigation.vue'
+import PatientAppointment from './views/PatientAppointment.vue'
 
 Vue.use(Router)
 
@@ -44,21 +45,26 @@ export default new Router({
       path: '/patient/:id',
       name: 'PatientSummary',
       component: PatientSummary
+    },
+    {
+      path: '/patient/:id/dermographic',
+      name: 'PatientDermographic',
+      component: PatientDermographic
+    },
+    {
+      path: '/patient/:id/visits/:visitID?',
+      name: 'PatientVisit',
+      component: PatientVisit
+    },
+    {
+      path: '/patient/:id/investigations/:IxID?',
+      name: 'PatientInvestigation',
+      component: PatientInvestigation
+    },
+    {
+      path: '/patient/:id/appointments/:appointmentID?',
+      name: 'PatientAppointment',
+      component: PatientAppointment
     }
-    // {
-    //   path: '/patient/:clinicID/dermographic',
-    //   name: 'PatientDermographic',
-    //   component: PatientDermographic
-    // },
-    // {
-    //   path: '/patient/:clinicID/visit/:dateURI?',
-    //   name: 'PatientVisit',
-    //   component: PatientVisit
-    // },
-    // {
-    //   path: '/patient/:clinicID/investigation/:dateURI?',
-    //   name: 'PatientInvestigation',
-    //   component: PatientInvestigation
-    // }
   ]
 })

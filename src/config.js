@@ -30,6 +30,9 @@ let numberOfPatientPerPage = 25
 
 let defaultToastDuration = 5000
 
+let overdueFUMonths = 6
+let overdueVLMonths = 12
+
 let config = {
   // MomentJS locale
   locale: locale,
@@ -70,7 +73,11 @@ let config = {
   numberOfPatientPerPage: numberOfPatientPerPage,
 
   globalDebounceWait: globalDebounceWait,
-  defaultToastDuration: defaultToastDuration
+  defaultToastDuration: defaultToastDuration,
+
+  // alerts in patient summery page
+  overdueFUMonths: overdueFUMonths,
+  overdueVLMonths: overdueVLMonths
 }
 
 export default config

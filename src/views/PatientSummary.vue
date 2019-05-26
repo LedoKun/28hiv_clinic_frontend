@@ -1,5 +1,5 @@
 <template>
-<section>
+<section v-if="patientData.id">
     <p class="title is-4">HN {{ patientData['hn'] ? patientData['hn'] : '' }}</p>
     <p class="subtitle is-6">Medical summary</p>
 
@@ -39,9 +39,13 @@
             }}
           </div>
           <div class="title">{{
-            lastVL.viralLoad
-            ? lastVL.viralLoad
-            : '-'
+            lastVL.viralLoad === 0
+            ? 'Undetectable'
+            : (
+              lastVL.viralLoad
+              ? lastVL.viralLoad 
+              : '-'
+            )
           }}</div>
         </div>
       </div>
@@ -104,18 +108,22 @@
         <p class="title is-5">Dermographic Information</p>
 
         <!-- incomplete data waring -->
-        <b-notification type="is-warning">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+        <b-notification type="is-warning" v-if="dermograpgicAlerts">
+          <p><b>Please enter the misssing information:</b> {{ dermograpgicAlerts }}.</p>
         </b-notification>
         <!-- /incomplete data waring -->
 
         <b-field grouped group-multiline class="is-grouped-right">
           <div class="control">
-            <a class="button is-link">Edit Partners</a>
+            <a class="button is-link">Add Patient's Partner</a>
           </div>
 
           <div class="control">
-            <a class="button is-link">Edit</a>
+            <router-link
+              class="button is-link"
+              :to="{ name: 'PatientDermographic', params: { id: patientData.id }}">
+              Edit Patient Information
+            </router-link>
           </div>
         </b-field>
 
@@ -141,7 +149,7 @@
               </tr>
 
               <tr>
-                <th class="rowHeader" rowspan="12">Demographics</th>
+                <th class="rowHeader" rowspan="11">Demographics</th>
                 <td class="secondaryRowHeader"><b>Name</b></td>
                 <td>{{ patientData.name ? patientData.name : '-' }}</td>
               </tr>
@@ -177,10 +185,11 @@
                 <td class="secondaryRowHeader"><b>Healthcare Scheme</b></td>
                 <td>{{ patientData.healthInsurance ? patientData.healthInsurance : '-' }}</td>
               </tr>
-              <tr>
+              <!-- reformat this line -->
+              <!-- <tr>
                 <td class="secondaryRowHeader"><b>Home Address</b></td>
                 <td>{{ patientData.address ? patientData.address : '-' }}</td>
-              </tr>
+              </tr> -->
               <tr>
                 <td class="secondaryRowHeader"><b>Phone Numbers</b></td>
                 <td>
@@ -211,13 +220,17 @@
                 <td>{{ patientData.patientStatus ? patientData.patientStatus : '-' }}</td>
               </tr>
               <tr>
-                <td class="secondaryRowHeader"><b>For Prescription Only?</b></td>
-                <td>{{ patientData.onlyPrescription ? 'รับยาเท่านั้น' : 'เข้าตรวจและรับยา' }}</td>
+                <td class="secondaryRowHeader"><b>Referred Out To</b></td>
+                <td>{{ patientData.referralStatus ? patientData.referredOutTo : '-' }}</td>
               </tr>
               <tr>
-                <th class="rowHeader" rowspan="1">Other HIV Assessments</th>
+                <th class="rowHeader" rowspan="1">HIV Transmission Assessments</th>
                 <td class="secondaryRowHeader"><b>Risk Behaviors</b></td>
-                <td>{{ patientData.riskBehaviors ? patientData.riskBehaviors : '-' }}</td>
+                <td>
+                  <span
+                    v-html="arrayToTableString(patientData.riskBehaviors)"
+                  />
+                </td>
               </tr>
             </tbody>
 
@@ -270,14 +283,18 @@
         <p class="title is-5">Visits</p>
 
         <!-- incomplete data waring -->
-        <b-notification type="is-warning">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+        <b-notification type="is-warning" v-if="isLastFUMoreThanLimit">
+          <p><b>Last visit was more than {{ $config.overdueFUMonths }} months ago!</b></p>
         </b-notification>
         <!-- /incomplete data waring -->
 
         <b-field grouped group-multiline class="is-grouped-right">
           <div class="control">
-            <a class="button is-link">Add New Visit</a>
+            <router-link
+              class="button is-link"
+              :to="{ name: 'PatientVisit', params: { id: patientData.id }}">
+              Add New Visit
+            </router-link>
           </div>
 
           <b-select v-model="visitPerPage">
@@ -381,6 +398,20 @@
                   v-html="arrayToTableString(props.row.medications)"
                 />
               </b-table-column>
+
+              <b-table-column field="id">
+                <a
+                  class="is-pulled-right"
+                  @click="goToSubcollection(
+                    'PatientVisit',
+                    {
+                      id: $route.params.id,
+                      visitID: props.row.id
+                    }
+                  )">
+                  <b-icon icon="open-in-new" size="is-small"/>
+                </a>
+              </b-table-column>
             </template>
         </b-table>
         <!-- /investigation table -->
@@ -395,14 +426,18 @@
         <p class="title is-5">Investigation</p>
 
         <!-- incomplete data waring -->
-        <b-notification type="is-warning">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
+        <b-notification type="is-warning" v-if="isLastVLMoreThanLimit">
+          <p><b>Viral load result is more than {{ $config.overdueVLMonths }} months old!</b></p>
         </b-notification>
         <!-- /incomplete data waring -->
 
         <b-field grouped group-multiline position="is-right">
           <div class="control">
-            <a class="button is-link">Add New Investigation</a>
+            <router-link
+              class="button is-link"
+              :to="{ name: 'PatientInvestigation', params: { id: patientData.id }}">
+              Add New Investigation
+            </router-link>
           </div>
 
           <b-select v-model="investigationsPerPage">
@@ -452,7 +487,7 @@
               </b-table-column>
 
               <b-table-column field="viralLoad" label="VL">
-              {{ props.row.viralLoad == -1 ? Undetectable : (props.row.viralLoad ? props.row.viralLoad : '-') }}
+              {{ props.row.viralLoad === 0 ? 'Undetectable' : (props.row.viralLoad ? props.row.viralLoad : '-') }}
               </b-table-column>
 
               <b-table-column field="absoluteCD4" label="CD4">
@@ -511,6 +546,20 @@
                 />
               </b-table-column>
 
+              <b-table-column field="id">
+                <a
+                  class="is-pulled-right"
+                  @click="goToSubcollection(
+                    'PatientInvestigation',
+                    {
+                      id: $route.params.id,
+                      IxID: props.row.id
+                    }
+                  )">
+                  <b-icon icon="open-in-new" size="is-small"/>
+                </a>
+              </b-table-column>
+
           </template>
         </b-table>
         <!-- /investigation table -->
@@ -524,15 +573,13 @@
       <div class="column">
         <p class="title is-5">Appointments</p>
 
-        <!-- incomplete data waring -->
-        <b-notification type="is-warning">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id fermentum quam. Proin sagittis, nibh id hendrerit imperdiet, elit sapien laoreet elit
-        </b-notification>
-        <!-- /incomplete data waring -->
-
         <b-field grouped group-multiline position="is-right">
           <div class="control">
-            <a class="button is-link">Add New Appointment</a>
+            <router-link
+              class="button is-link"
+              :to="{ name: 'PatientAppointment', params: { id: patientData.id }}">
+              Add New Appointment
+            </router-link>
           </div>
 
           <b-select v-model="appointmentsPerPage">
@@ -579,11 +626,25 @@
 
             <template slot-scope="props">
                 <b-table-column field="date" label="Appointment Date" sortable>
-                {{ $moment(props.row.date, $config["APIDateFormat"]).format('LL') }}
+                {{ $moment(props.row.date, $config["APIDateFormat"]).format('l') }}
                 </b-table-column>
 
                 <b-table-column field="appointmentFor" label="For" sortable>
                 {{ props.row.appointmentFor }}
+                </b-table-column>
+
+                <b-table-column field="id">
+                  <a
+                    class="is-pulled-right"
+                    @click="goToSubcollection(
+                      'PatientAppointment',
+                      {
+                        id: $route.params.id,
+                        appointmentID: props.row.id
+                      }
+                    )">
+                    <b-icon icon="open-in-new" size="is-small"/>
+                  </a>
                 </b-table-column>
             </template>
         </b-table>
@@ -598,6 +659,7 @@
 <script>
 import fetchData from '@/utils/http/fetchData.js'
 import commonErrorToast from '@/utils/ui/commonErrorToast.js'
+import displayDermographicAlerts from '@/utils/ui/displayDermographicAlerts.js'
 
 export default {
   name: 'PatientSummary',
@@ -612,29 +674,46 @@ export default {
     }
   },
   methods: {
+    goToSubcollection (routeName, params) {
+      this.$router.push({
+        name: routeName,
+        params: params
+      })
+    },
     findLastestLabs () {
       let self = this
 
+      // find last FU
+      if (Array.isArray(this.patientData.visits)) {
+        let lastVisit = this.patientData.visits.slice(1)[0]
+
+        if (lastVisit) {
+          self.lastFU = lastVisit.date
+        } else {
+          self.lastFU = null
+        }
+      }
+
       // find last labs
       this.$_.forEach(this.patientData.investigations, function (item) {
-        if (item.absoluteCD4 && !self.lastCD4.date) {
+        if (item.absoluteCD4 !== null && !self.lastCD4.date) {
           self.lastCD4['date'] = item.date
           self.lastCD4['absoluteCD4'] = item.absoluteCD4
           self.lastCD4['percentCD4'] = item.percentCD4
         }
 
-        if (item.viralLoad && !self.lastVL['date']) {
+        if (item.viralLoad !== null && !self.lastVL['date']) {
           self.lastVL['date'] = item.date
           self.lastVL['viralLoad'] = item.viralLoad
         }
 
-        if (item.creatinine && !self.lastCr['date']) {
+        if (item.creatinine !== null && !self.lastCr['date']) {
           self.lastCr['date'] = item.date
           self.lastCr['creatinine'] = item.creatinine
           self.lastCr['eGFR'] = item.eGFR
         }
 
-        if (item.hemoglobin && !self.lastHb['date']) {
+        if (item.hemoglobin !== null && !self.lastHb['date']) {
           self.lastHb['date'] = item.date
           self.lastHb['hemoglobin'] = item.hemoglobin
           self.lastHb['hematocrit'] = item.hematocrit
@@ -748,6 +827,31 @@ export default {
       return tableString
     }
   },
+  computed: {
+    dermograpgicAlerts: function () {
+      return displayDermographicAlerts(this.patientData)
+    },
+    isLastVLMoreThanLimit: function () {
+      let lastVLMoment = this.$moment(this.lastVL['date'])
+      let todayMoment = this.$moment()
+
+      if (lastVLMoment.isValid()) {
+        return todayMoment.diff(lastVLMoment, 'month') > this.$config.overdueVLMonths
+      } else {
+        return null
+      }
+    },
+    isLastFUMoreThanLimit: function () {
+      let lastFUMoment = this.$moment(this.lastFU)
+      let todayMoment = this.$moment()
+
+      if (lastFUMoment.isValid()) {
+        return todayMoment.diff(lastFUMoment, 'month') > this.$config.overdueFUMonths
+      } else {
+        return null
+      }
+    }
+  },
   created () {
     this.getData = this.$_.debounce(this.getData, this.$config['globalDebounceWait'])
   },
@@ -763,6 +867,9 @@ export default {
       appointmentsPerPage: 5,
       investigationsPerPage: 5,
       visitPerPage: 5,
+
+      // lastFU
+      lastFU: null,
 
       // top boxes data
       lastCD4: {},
@@ -861,6 +968,10 @@ export default {
         {
           fieldKey: 'tst',
           fieldName: 'TST (mm)'
+        },
+        {
+          fieldKey: 'chestXRay',
+          fieldName: 'CXR'
         }
       ]
     }

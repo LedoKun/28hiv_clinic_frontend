@@ -32,7 +32,7 @@ function requestSuccess (config) {
       config.data[key] = formatDate(value)
     }
 
-    // Also convert all 'False' but not zero values to null
+    // Also convert 'Falsy' values but not zero to null
     if (!value) {
       config.data[key] = null
     }

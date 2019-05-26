@@ -12,7 +12,7 @@ async function fetchData (url, method = 'get', params = null) {
   } catch (error) {
     console.error('Unable to contact the backend server.')
     console.error(error)
-    Promise.reject(new Error(error))
+    throw Error(error)
   }
 }
 
