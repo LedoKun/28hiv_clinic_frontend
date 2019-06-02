@@ -43,8 +43,8 @@
                         <template slot-scope="props">
                             <div class="media">
                                 <div class="media-content">
-                                {{ props.option.name }} [{{ props.option.nationality }}]<br>
-                                <small>HN {{ props.option.hn }} {{ props.option.clinicID ? '- ' + props.option.clinicID : '' }}</small>
+                                {{ props.option.name }} {{ props.option.clinicID ? '['+props.option.clinicID+']' : '' }}<br>
+                                <small>HN {{ props.option.hn }} [{{ props.option.nationality }}]</small>
                                 </div>
                             </div>
                         </template>

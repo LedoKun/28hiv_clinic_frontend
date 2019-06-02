@@ -297,7 +297,20 @@
           <b-field label="Referred From"
             :type="{'is-danger': errors.has('referredFrom')}"
             :message="errors.first('referredFrom')">
-            <b-input v-model="formData.referredFrom" name="referredFrom" data-vv-as="referred from" />
+
+            <b-autocomplete
+                v-model="formData.referredFrom"
+                ref="referredFrom"
+                :data="referredFromData"
+
+                field="referredFrom"
+                :loading="isFetching"
+                @keyup.native="getSearchHits ('referredFrom')"
+                :clear-on-select="false"
+                id="referredFromSearchBox"
+                expanded
+                :keep-first="true"
+            />
           </b-field>
 
           <b-field label="Patient Status"
@@ -318,7 +331,22 @@
           <b-field label="Referred Out To"
             :type="{'is-danger': errors.has('referredOutTo')}"
             :message="errors.first('referredOutTo')">
-            <b-input v-model="formData.referredOutTo" name="referredOutTo" data-vv-as="referred out to" />
+
+            <b-autocomplete
+                v-model="formData.referredOutTo"
+                ref="referredOutTo"
+                :data="referredOutToData"
+
+                field="referredOutTo"
+                :loading="isFetching"
+                @keyup.native="getSearchHits ('referredOutTo')"
+                :clear-on-select="false"
+                id="referredOutToSearchBox"
+                expanded
+                :keep-first="true"
+            />
+
+            <!-- <b-input v-model="formData.referredOutTo" name="referredOutTo" data-vv-as="referred out to" /> -->
           </b-field>
 
           <div class="field">
@@ -443,6 +471,8 @@ export default {
   created () {
     this.setDefault()
     this.getData()
+
+    this.getSearchHits = this.$_.debounce(this.getSearchHits, this.$config['globalDebounceWait'])
   },
   methods: {
     setDefault () {
@@ -468,6 +498,9 @@ export default {
       }
 
       this.$validator.errors.clear()
+
+      this.referredFromData = []
+      this.referredOutToData = []
     },
     goBack () {
       this.$router.push({
@@ -476,6 +509,48 @@ export default {
           id: this.$route.params.id
         }
       })
+    },
+    async getSearchHits (fieldName) {
+      let keyword = null
+
+      if (fieldName === 'referredFrom') {
+        keyword = this.formData.referredFrom
+        this.referredFromData = []
+      } else {
+        keyword = this.formData.referredOutTo
+        this.referredOutToData = []
+      }
+
+      if (!keyword || !this.isReady) {
+        return
+      }
+
+      this.isFetching = true
+
+      try {
+        let url = this.$config['APIPath'] + '/patient/search'
+        let params = {
+          fieldName: fieldName,
+          keyword: keyword
+        }
+        let response = await fetchData(url, 'get', params)
+
+        if (fieldName === 'referredFrom') {
+          this.referredFromData = response.data
+        } else {
+          this.referredOutToData = response.data
+        }
+      } catch {
+        if (fieldName === 'referredFrom') {
+          this.referredFromData = []
+        } else {
+          this.referredOutToData = []
+        }
+
+        commonErrorToast()
+      } finally {
+        this.isFetching = false
+      }
     },
     async getData () {
       let self = this
@@ -569,7 +644,11 @@ export default {
   data: () => {
     return {
       isReady: false,
-      formData: {}
+      formData: {},
+
+      isFetching: false,
+      referredFromData: [],
+      referredOutToData: []
     }
   }
 }

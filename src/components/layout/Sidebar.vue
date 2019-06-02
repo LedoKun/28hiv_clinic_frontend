@@ -20,7 +20,7 @@
     </ul>
 
     <p class="menu-label">
-      Saved Patients
+      Patients
     </p>
     <div v-for="(item, key) in savedPatients" :key="key">
       <SavedPatientMenu

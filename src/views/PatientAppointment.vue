@@ -67,7 +67,7 @@ import http from '@/utils/http/http.js'
 import commonErrorToast from '@/utils/ui/commonErrorToast.js'
 
 export default {
-  name: 'PatientVisit',
+  name: 'PatientAppointment',
   components: {},
   created () {
     this.setDefault()

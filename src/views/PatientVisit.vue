@@ -88,13 +88,24 @@
           <b-field label="Impressions"
             :type="{'is-danger': errors.has('impression')}"
             :message="errors.first('impression')">
+
               <b-taginput
                 v-model="formData.impression"
+                :data="impressionData"
+
+                autocomplete
+                :loading="isFetching"
                 icon="label"
-                placeholder="Add an impression"
+                placeholder="Add an ICD10 diagnosis"
+                @typing="getICD10"
                 name="impression"
                 v-validate="'required|min:1'"
-                data-vv-as="impressions" />
+                data-vv-as="impressions">
+
+                <template slot="empty">
+                  No results
+                </template>
+              </b-taginput>
           </b-field>
 
           <b-field label="ARV Medications"
@@ -188,7 +199,8 @@ export default {
       }
 
       this.$validator.errors.clear()
-
+      this.impressionData = []
+      this.isFetching = false
       this.isReady = true
     },
     goBack () {
@@ -235,9 +247,6 @@ export default {
         if (!Array.isArray(data.medications)) {
           data.medications = []
         }
-
-        // discard all medications data
-        delete data.medications
 
         self.formData = data
       } catch (error) {
@@ -295,12 +304,38 @@ export default {
             commonErrorToast()
           }
         })
+    },
+    async getICD10 (keyword) {
+      if (!keyword && !self.isReady) {
+        return
+      }
+
+      this.impressionData = []
+      this.isFetching = true
+
+      try {
+        let url = this.$config['APIPath'] + '/form_helpers/icd10/search'
+        let params = {
+          keyword: keyword
+        }
+        let response = await fetchData(url, 'get', params)
+
+        this.impressionData = response.data
+      } catch {
+        this.impressionData = []
+        commonErrorToast()
+      } finally {
+        this.isFetching = false
+      }
     }
   },
   data: () => {
     return {
       isReady: false,
-      formData: {}
+      formData: {},
+
+      isFetching: false,
+      impressionData: []
     }
   }
 }

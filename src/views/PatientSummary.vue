@@ -43,7 +43,7 @@
             ? 'Undetectable'
             : (
               lastVL.viralLoad
-              ? lastVL.viralLoad 
+              ? lastVL.viralLoad
               : '-'
             )
           }}</div>
@@ -105,27 +105,39 @@
     <!-- dermographic -->
     <div class="columns">
       <div class="column">
-        <p class="title is-5">Dermographic Information</p>
+
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <p class="title is-5">Dermographic Information</p>
+            </div>
+          </div>
+          <div class="level-right">
+            <b-field grouped group-multiline class="level-item">
+              <div class="control">
+                <router-link
+                  class="button is-link"
+                  :to="{ name: 'PatientPartner', params: { id: patientData.id }}">
+                  Add Patient's Partner
+                </router-link>
+              </div>
+
+              <div class="control">
+                <router-link
+                  class="button is-link"
+                  :to="{ name: 'PatientDermographic', params: { id: patientData.id }}">
+                  Edit Patient Information
+                </router-link>
+              </div>
+            </b-field>
+          </div>
+        </div>
 
         <!-- incomplete data waring -->
         <b-notification type="is-warning" v-if="dermograpgicAlerts">
           <p><b>Please enter the misssing information:</b> {{ dermograpgicAlerts }}.</p>
         </b-notification>
         <!-- /incomplete data waring -->
-
-        <b-field grouped group-multiline class="is-grouped-right">
-          <div class="control">
-            <a class="button is-link">Add Patient's Partner</a>
-          </div>
-
-          <div class="control">
-            <router-link
-              class="button is-link"
-              :to="{ name: 'PatientDermographic', params: { id: patientData.id }}">
-              Edit Patient Information
-            </router-link>
-          </div>
-        </b-field>
 
         <div class="bd-content">
           <table class="table is-striped is-narrow is-hoverable is-fullwidth">
@@ -240,7 +252,22 @@
               v-bind:key="index"
             >
               <tr>
-                <th class="rowHeader" rowspan="7">Partner #{{index}}</th>
+                <th class="rowHeader" rowspan="7">
+                  Partner #{{index + 1}}
+
+                  <a
+                    class="is-pulled-right"
+                    @click="goToSubcollection(
+                      'PatientPartner',
+                      {
+                        id: $route.params.id,
+                        partnerID: partner.id
+                      }
+                    )">
+                    <b-icon icon="open-in-new" size="is-small"/>
+                  </a>
+
+                </th>
                 <td class="secondaryRowHeader"><b>Deceased?</b></td>
                 <td>{{ partner.deceased ? partner.deceased : '-' }}</td>
               </tr>
@@ -258,7 +285,11 @@
               </tr>
               <tr>
                 <td class="secondaryRowHeader"><b>HIV Treatment / Prevention</b></td>
-                <td>{{ partner.HIVTreatmentOrPrevention ? partner.HIVTreatmentOrPrevention : '-' }}</td>
+                <td>
+                  <span
+                    v-html="arrayToTableString(partner.HIVTreatmentOrPrevention)"
+                  />
+                </td>
               </tr>
               <tr>
                 <td class="secondaryRowHeader"><b>Name of Clinic Attend</b></td>
@@ -280,29 +311,37 @@
     <!-- /visit -->
     <div class="columns">
       <div class="column">
-        <p class="title is-5">Visits</p>
+
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <p class="title is-5">Visits</p>
+            </div>
+          </div>
+          <div class="level-right">
+            <b-field grouped group-multiline class="level-item">
+              <div class="control">
+                <router-link
+                  class="button is-link"
+                  :to="{ name: 'PatientVisit', params: { id: patientData.id }}">
+                  Add New Visit
+                </router-link>
+              </div>
+
+              <b-select v-model="visitPerPage">
+                  <option value="5">5 per page</option>
+                  <option value="10">10 per page</option>
+                  <option value="25">25 per page</option>
+              </b-select>
+            </b-field>
+          </div>
+        </div>
 
         <!-- incomplete data waring -->
         <b-notification type="is-warning" v-if="isLastFUMoreThanLimit">
           <p><b>Last visit was more than {{ $config.overdueFUMonths }} months ago!</b></p>
         </b-notification>
         <!-- /incomplete data waring -->
-
-        <b-field grouped group-multiline class="is-grouped-right">
-          <div class="control">
-            <router-link
-              class="button is-link"
-              :to="{ name: 'PatientVisit', params: { id: patientData.id }}">
-              Add New Visit
-            </router-link>
-          </div>
-
-          <b-select v-model="visitPerPage">
-              <option value="5">5 per page</option>
-              <option value="10">10 per page</option>
-              <option value="25">25 per page</option>
-          </b-select>
-        </b-field>
 
         <!-- investigation table -->
         <b-table
@@ -342,27 +381,27 @@
 
             <template slot-scope="props">
               <b-table-column field="date" label="Date" sortable>
-              {{ $moment(props.row.date, $config["APIDateFormat"]).format('l') }}
+                <span>{{ $moment(props.row.date, $config["APIDateFormat"]).format('l') }}</span>
               </b-table-column>
 
               <b-table-column field="bodyWeight" label="BW (kg)">
-              {{ props.row.bodyWeight ? props.row.bodyWeight : '-' }}
+                <span>{{ props.row.bodyWeight ? props.row.bodyWeight : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="historyOfContactWithTB" label="Contact TB?">
-              {{ props.row.historyOfContactWithTB ? props.row.historyOfContactWithTB : '-' }}
+                <span>{{ props.row.historyOfContactWithTB ? props.row.historyOfContactWithTB : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="ARTAdherenceScale" label="ART Adherence">
-              {{ props.row.ARTAdherenceScale ? props.row.ARTAdherenceScale + '%' : '-' }}
+                <span>{{ props.row.ARTAdherenceScale ? props.row.ARTAdherenceScale + '%' : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="ARTAvgDelayedDosing" label="ARV Delayed Dosing">
-              {{ props.row.ARTAdherenceScale ? props.row.ARTAdherenceScale + ' min' : '-' }}
+                <span>{{ props.row.ARTAdherenceScale ? props.row.ARTAdherenceScale + ' min' : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="ARTAdherenceProblem" label="Adherence Problems">
-              {{ props.row.ARTAdherenceProblem ? props.row.ARTAdherenceProblem : '-' }}
+                <span>{{ props.row.ARTAdherenceProblem ? props.row.ARTAdherenceProblem : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="impression" label="Impressions">
@@ -378,7 +417,7 @@
               </b-table-column>
 
               <b-table-column field="whySwitchingARV" label="ARV Switch?">
-              {{ props.row.whySwitchingARV ? props.row.whySwitchingARV : '-' }}
+                <span>{{ props.row.whySwitchingARV ? props.row.whySwitchingARV : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="tbMedications" label="Anti-TB Drugs">
@@ -423,29 +462,37 @@
     <!-- investigation -->
     <div class="columns">
       <div class="column">
-        <p class="title is-5">Investigation</p>
+
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <p class="title is-5">Investigation</p>
+            </div>
+          </div>
+          <div class="level-right">
+            <b-field grouped group-multiline position="level-item">
+              <div class="control">
+                <router-link
+                  class="button is-link"
+                  :to="{ name: 'PatientInvestigation', params: { id: patientData.id }}">
+                  Add New Investigation
+                </router-link>
+              </div>
+
+              <b-select v-model="investigationsPerPage">
+                  <option value="5">5 per page</option>
+                  <option value="10">10 per page</option>
+                  <option value="25">25 per page</option>
+              </b-select>
+            </b-field>
+          </div>
+        </div>
 
         <!-- incomplete data waring -->
         <b-notification type="is-warning" v-if="isLastVLMoreThanLimit">
           <p><b>Viral load result is more than {{ $config.overdueVLMonths }} months old!</b></p>
         </b-notification>
         <!-- /incomplete data waring -->
-
-        <b-field grouped group-multiline position="is-right">
-          <div class="control">
-            <router-link
-              class="button is-link"
-              :to="{ name: 'PatientInvestigation', params: { id: patientData.id }}">
-              Add New Investigation
-            </router-link>
-          </div>
-
-          <b-select v-model="investigationsPerPage">
-              <option value="5">5 per page</option>
-              <option value="10">10 per page</option>
-              <option value="25">25 per page</option>
-          </b-select>
-        </b-field>
 
         <!-- investigation table -->
         <b-table
@@ -483,19 +530,30 @@
 
           <template slot-scope="props">
               <b-table-column field="date" label="Date" sortable>
-              {{ $moment(props.row.date, $config["APIDateFormat"]).format('l') }}
+                <span>
+                  {{$moment(props.row.date, $config["APIDateFormat"]).format('l') }}
+                </span>
               </b-table-column>
 
               <b-table-column field="viralLoad" label="VL">
-              {{ props.row.viralLoad === 0 ? 'Undetectable' : (props.row.viralLoad ? props.row.viralLoad : '-') }}
+                <span>
+                  {{
+                    props.row.viralLoad === 0
+                    ? 'Undetectable'
+                    : (
+                      props.row.viralLoad
+                      ? props.row.viralLoad
+                      : '-'
+                    )
+                  }}</span>
               </b-table-column>
 
               <b-table-column field="absoluteCD4" label="CD4">
-              {{ props.row.absoluteCD4 ? props.row.absoluteCD4 : '-' }}
+                <span>{{ props.row.absoluteCD4 ? props.row.absoluteCD4 : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="percentCD4" label="%CD4">
-              {{ props.row.percentCD4 ? props.row.percentCD4 : '-' }}
+                <span>{{ props.row.percentCD4 ? props.row.percentCD4 : '-' }}</span>
               </b-table-column>
 
               <b-table-column field="cbc" label="CBC">
@@ -571,23 +629,31 @@
     <!-- appointment -->
     <div class="columns">
       <div class="column">
-        <p class="title is-5">Appointments</p>
 
-        <b-field grouped group-multiline position="is-right">
-          <div class="control">
-            <router-link
-              class="button is-link"
-              :to="{ name: 'PatientAppointment', params: { id: patientData.id }}">
-              Add New Appointment
-            </router-link>
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <p class="title is-5">Appointments</p>
+            </div>
           </div>
+          <div class="level-right">
+            <b-field grouped group-multiline position="level-item">
+              <div class="control">
+                <router-link
+                  class="button is-link"
+                  :to="{ name: 'PatientAppointment', params: { id: patientData.id }}">
+                  Add New Appointment
+                </router-link>
+              </div>
 
-          <b-select v-model="appointmentsPerPage">
-              <option value="5">5 per page</option>
-              <option value="10">10 per page</option>
-              <option value="25">25 per page</option>
-          </b-select>
-        </b-field>
+              <b-select v-model="appointmentsPerPage">
+                  <option value="5">5 per page</option>
+                  <option value="10">10 per page</option>
+                  <option value="25">25 per page</option>
+              </b-select>
+            </b-field>
+          </div>
+        </div>
 
         <!-- Appointment table -->
         <b-table
@@ -626,11 +692,11 @@
 
             <template slot-scope="props">
                 <b-table-column field="date" label="Appointment Date" sortable>
-                {{ $moment(props.row.date, $config["APIDateFormat"]).format('l') }}
+                  <span>{{ $moment(props.row.date, $config["APIDateFormat"]).format('l') }}</span>
                 </b-table-column>
 
                 <b-table-column field="appointmentFor" label="For" sortable>
-                {{ props.row.appointmentFor }}
+                  <span>{{ props.row.appointmentFor }}</span>
                 </b-table-column>
 
                 <b-table-column field="id">
@@ -981,7 +1047,7 @@ export default {
 
 <style scoped>
 .columns {
-  padding-bottom: 0.5rem !important;
+  padding-bottom: 3.5rem !important;
 }
 
 .chart-wrapper {
@@ -1007,12 +1073,7 @@ td {
   max-width: 3rem !important;
 }
 
-.noti-box .spark-chart {
-  height: 5rem;
-}
-
-.spark-chart {
-  width: 100%;
-  margin: 0.25rem;
+.noti-box {
+  height: 7rem;
 }
 </style>

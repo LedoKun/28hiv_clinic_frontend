@@ -11,6 +11,7 @@ import PatientDermographic from './views/PatientDermographic.vue'
 import PatientVisit from './views/PatientVisit.vue'
 import PatientInvestigation from './views/PatientInvestigation.vue'
 import PatientAppointment from './views/PatientAppointment.vue'
+import PatientPartner from './views/PatientPartner.vue'
 
 Vue.use(Router)
 
@@ -65,6 +66,11 @@ export default new Router({
       path: '/patient/:id/appointments/:appointmentID?',
       name: 'PatientAppointment',
       component: PatientAppointment
+    },
+    {
+      path: '/patient/:id/partners/:partnerID?',
+      name: 'PatientPartner',
+      component: PatientPartner
     }
   ]
 })
