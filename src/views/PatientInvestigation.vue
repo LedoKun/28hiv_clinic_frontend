@@ -36,13 +36,13 @@
               editable />
           </b-field>
 
-          <b-field label="VL (Enter 0 If Undetectable)"
+          <b-field label="Viral Load (Enter -1 If Undetectable)"
             :type="{'is-danger': errors.has('viralLoad')}"
             :message="errors.first('viralLoad')">
             <b-input
               v-model="formData.viralLoad"
               name="viralLoad"
-              v-validate="'numeric|min_value:0'"
+              v-validate="'min_value:-1'"
               data-vv-as="VL" />
           </b-field>
 

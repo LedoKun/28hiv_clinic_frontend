@@ -8,8 +8,6 @@ import _ from 'lodash'
 import moment from 'moment'
 import Buefy from 'buefy'
 import VeeValidate from 'vee-validate'
-import VueFormly from 'vue-formly'
-import VueFormlyBuefy from 'vue-formly-buefy'
 
 import 'buefy/dist/buefy.css'
 import '@mdi/font/css/materialdesignicons.min.css'
@@ -33,10 +31,6 @@ Vue.use(Buefy, {
   defaultMonthNames: Config.defaultMonthNames,
   defaultToastDuration: Config.defaultToastDuration
 })
-
-// vue-formly-buefy
-Vue.use(VueFormly)
-Vue.use(VueFormlyBuefy)
 
 // VeeValidate
 Vue.use(VeeValidate)

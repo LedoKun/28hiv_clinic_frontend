@@ -14,7 +14,8 @@
       Administration
     </p>
     <ul class="menu-list">
-      <li><a>Statistics</a></li>
+
+      <li><router-link :to="{ name: 'ClinicStatistics' }" exact>Statistics</router-link></li>
       <li><a>Export data</a></li>
       <li><a>Users</a></li>
     </ul>

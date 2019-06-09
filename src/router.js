@@ -13,6 +13,8 @@ import PatientInvestigation from './views/PatientInvestigation.vue'
 import PatientAppointment from './views/PatientAppointment.vue'
 import PatientPartner from './views/PatientPartner.vue'
 
+import ClinicStatistics from './views/ClinicStatistics.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -71,6 +73,11 @@ export default new Router({
       path: '/patient/:id/partners/:partnerID?',
       name: 'PatientPartner',
       component: PatientPartner
+    },
+    {
+      path: '/statistics',
+      name: 'ClinicStatistics',
+      component: ClinicStatistics
     }
   ]
 })

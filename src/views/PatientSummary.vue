@@ -8,13 +8,11 @@
       <!-- cd4 -->
       <div class="column">
         <div class="box noti-box notification is-primary">
-          <div class="heading">
-            Last CD4 {{
-              lastCD4.date
-              ? 'On ' + $moment(lastCD4.date).format('l')
-              : ''
-            }}
-          </div>
+          <div class="heading">Last CD4 {{
+            lastCD4.date
+            ? 'On ' + $moment(lastCD4.date).format('l')
+            : ''
+          }}</div>
           <div class="title">{{
             lastCD4.absoluteCD4
             ? lastCD4.absoluteCD4
@@ -31,13 +29,11 @@
       <!-- vl -->
       <div class="column">
         <div class="box noti-box notification is-warning">
-          <div class="heading">
-            Last VL {{
+          <div class="heading">Last VL {{
               lastVL.date
               ? 'On ' + $moment(lastVL.date).format('l')
               : ''
-            }}
-          </div>
+            }}</div>
           <div class="title">{{
             lastVL.viralLoad === 0
             ? 'Undetectable'
@@ -54,13 +50,11 @@
       <!-- cr, egfr -->
       <div class="column">
         <div class="box noti-box notification is-info">
-          <div class="heading">
-            Last Cr / GFR {{
+          <div class="heading">Last Cr / GFR {{
               lastCr.date
               ? 'On ' + $moment(lastCr.date).format('l')
               : ''
-            }}
-          </div>
+            }}</div>
           <div class="title">{{
             lastCr.creatinine
             ? lastCr.creatinine
@@ -78,13 +72,11 @@
       <!-- hct, hb -->
       <div class="column">
         <div class="box noti-box notification is-danger">
-          <div class="heading">
-            Last Hb / Hct {{
+          <div class="heading">Last Hb / Hct {{
               lastHb.date
               ? 'On ' + $moment(lastHb.date).format('l')
               : ''
-            }}
-          </div>
+            }}</div>
           <div class="title">{{
             lastHb.hemoglobin
             ? lastHb.hemoglobin
@@ -797,7 +789,13 @@ export default {
     },
     async getData () {
       let self = this
+
+      // set default values
       self.isFetching = true
+      self.lastCD4 = {}
+      self.lastVL = {}
+      self.lastCr = {}
+      self.lastHb = {}
 
       try {
         let url = self.$config['APIPath'] + '/patient/' + self.$route.params.id
