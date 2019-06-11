@@ -16,7 +16,7 @@
     <ul class="menu-list">
 
       <li><router-link :to="{ name: 'ClinicStatistics' }" exact>Statistics</router-link></li>
-      <li><a>Export data</a></li>
+      <li><router-link :to="{ name: 'ExportData' }" exact>Export data</router-link></li>
       <li><a>Users</a></li>
     </ul>
 

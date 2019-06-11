@@ -14,6 +14,7 @@ import PatientAppointment from './views/PatientAppointment.vue'
 import PatientPartner from './views/PatientPartner.vue'
 
 import ClinicStatistics from './views/ClinicStatistics.vue'
+import ExportData from './views/ExportData.vue'
 
 Vue.use(Router)
 
@@ -78,6 +79,11 @@ export default new Router({
       path: '/statistics',
       name: 'ClinicStatistics',
       component: ClinicStatistics
+    },
+    {
+      path: '/statistics/export_data',
+      name: 'ExportData',
+      component: ExportData
     }
   ]
 })
