@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="!isFetching">
 
     <div class="columns">
       <div class="column">
@@ -11,43 +11,10 @@
       <div class="column">
         <p class="title is-6">TUC's Data Dict</p>
 
-        <div class="table-div">
-          <b-table
-            class="table"
-
-            :hoverable="true"
-            :mobile-cards="true"
-            :striped="true"
-
-            :data="tableData"
-            :columns="tableColumns"
-
-            :loading="isFetching"
-
-            paginated
-            :total="tableData ? tableData.length : 0"
-            :per-page="20"
-            pagination-size="is-small"
-            :pagination-simple="true"
-          >
-            <!-- empty -->
-            <template slot="empty">
-                <section class="section">
-                    <div class="content has-text-grey has-text-centered">
-                        <p>
-                            <b-icon
-                                icon="emoticon-sad"
-                                size="is-large">
-                            </b-icon>
-                        </p>
-                        <p>Nothing here.</p>
-                    </div>
-                </section>
-            </template>
-            <!-- /empty -->
-          </b-table>
+        <div>
+          <hot-table :settings="settings"></hot-table>
         </div>
-  
+
       </div>
     </div>
 
@@ -57,10 +24,13 @@
 <script>
 import fetchData from '@/utils/http/fetchData.js'
 import commonErrorToast from '@/utils/ui/commonErrorToast.js'
+import { HotTable } from '@handsontable/vue'
 
 export default {
   name: 'ExportData',
-  components: {},
+  components: {
+    HotTable
+  },
   mounted: function () {
     this.getData()
   },
@@ -77,12 +47,12 @@ export default {
         let response = await fetchData(url, 'get')
         let data = response.data
 
-        self.tableData = data['tableData']
-        self.tableColumns = data['tableColumns']
+        self.settings.data = data.data
+        self.settings.colHeaders = data.colHeaders
       } catch (error) {
         console.error(error)
-        self.tableData = []
-        self.tableColumns = []
+        self.settings.data = []
+        self.settings.colHeaders = false
 
         commonErrorToast()
       } finally {
@@ -92,10 +62,21 @@ export default {
   },
   data: () => {
     return {
-      tableData: [],
-      tableColumns: [],
+      isFetching: true,
 
-      isFetching: true
+      // handsontable settings
+      settings: {
+        data: [],
+        rowHeaders: true,
+        colHeaders: false,
+        licenseKey: 'non-commercial-and-evaluation',
+        height: 500,
+        columnSorting: {
+          indicator: true
+        },
+        manualRowMove: true,
+        manualColumnMove: true
+      }
     }
   }
 }
@@ -110,18 +91,6 @@ export default {
   margin-top: 1.5rem !important;
   margin-bottom: 2.5rem !important;
 }
-
-.table {
-  font-size: small !important;
-  padding: 0.1rem !important;
-}
-
-.table-div {
-  overflow-x: auto !important;
-  white-space: nowrap;
-}
-
-.b-table .level {
-  width: 100%;
-}
 </style>
+
+<style src="handsontable/dist/handsontable.full.css"></style>
