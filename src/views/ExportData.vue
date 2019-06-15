@@ -9,7 +9,26 @@
 
     <div class="columns">
       <div class="column">
-        <p class="title is-6">TUC's Data Dict</p>
+        <div class="level">
+          <div class="level-left">
+            <p class="title is-6">Patient's Data Dict</p>
+          </div>
+          <div class="level-right">
+            <b-field grouped group-multiline position="level-item">
+              <div
+                class="control"
+                v-if="settings.data"
+              >
+                <a
+                  :href="$config['APIPath'] + '/statistics/data_dict?as_file=true'"
+                  class="button is-link"
+                >
+                  Download Spreadsheet
+                </a>
+              </div>
+            </b-field>
+          </div>
+        </div>
 
         <div>
           <hot-table :settings="settings"></hot-table>

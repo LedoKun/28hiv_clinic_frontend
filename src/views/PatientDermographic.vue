@@ -70,8 +70,10 @@
             :type="{'is-danger': errors.has('sex')}"
             :message="errors.first('sex')">
             <b-select v-model="formData.sex" name="sex" placeholder="Select an option" v-validate="'required'" data-vv-as="sex" >
+                <option value="">Select an option</option>
                 <option value="ชาย">ชาย</option>
                 <option value="หญิง">หญิง</option>
+                <option value="หญิง">อื่นๆ</option>
             </b-select>
           </b-field>
 
@@ -79,6 +81,7 @@
             :type="{'is-danger': errors.has('gender')}"
             :message="errors.first('gender')">
             <b-select v-model="formData.gender" name="gender" placeholder="Select an option" data-vv-as="gender" >
+                <option value="">Select an option</option>
                 <option value="Homosexual">Homosexual</option>
                 <option value="Heterosexual">Heterosexual</option>
                 <option value="Bisexual">Bisexual</option>
@@ -91,6 +94,7 @@
             :type="{'is-danger': errors.has('maritalStatus')}"
             :message="errors.first('maritalStatus')">
             <b-select v-model="formData.maritalStatus" name="maritalStatus" placeholder="Select an option" data-vv-as="marital status" >
+                <option value="">Select an option</option>
                 <option value="โสด">โสด</option>
                 <option value="คู่">คู่</option>
                 <option value="หม้าย">หม้าย</option>
@@ -105,6 +109,7 @@
             :type="{'is-danger': errors.has('nationality')}"
             :message="errors.first('nationality')">
             <b-select v-model="formData.nationality" name="nationality" placeholder="Select an option" v-validate="'required'" data-vv-as="nationality" >
+              <option value="">Select an option</option>
               <option value="ไม่ระบุ">ไม่ระบุ</option>
               <option value="ไร้สัญชาติ">ไร้สัญชาติ</option>
               <option value="ชาวเขาที่ไม่ได้สัญชาติไทย">ชาวเขาที่ไม่ได้สัญชาติไทย</option>
@@ -213,10 +218,49 @@
             </b-select>
           </b-field>
 
+          <b-field label="Occupation"
+            :type="{'is-danger': errors.has('occupation')}"
+            :message="errors.first('occupation')">
+            <b-select v-model="formData.occupation" name="occupation" placeholder="Select an option" data-vv-as="occupation" >
+                <option value="">Select an option</option>
+                <option value="Farmer">Farmer</option>
+                <option value="Civil servant">Civil servant</option>
+                <option value="Commercial sex worker">Commercial sex worker</option>
+                <option value="Student">Student</option>
+                <option value="Fisherman">Fisherman</option>
+                <option value="Factory worker">Factory worker</option>
+                <option value="State enterprise employee">State enterprise employee</option>
+                <option value="Company employee">Company employee</option>
+                <option value="Monk">Monk</option>
+                <option value="Government employee">Government employee</option>
+                <option value="Healthcare Provider">Healthcare Provider</option>
+                <option value="Laborer">Laborer</option>
+                <option value="Full-time worker/part-time worker">Full-time worker/part-time worker</option>
+                <option value="Unemployed">Unemployed</option>
+                <option value="ไม่ทราบ">ไม่ทราบ</option>
+            </b-select>
+          </b-field>
+
+          <b-field label="Education"
+            :type="{'is-danger': errors.has('education')}"
+            :message="errors.first('education')">
+            <b-select v-model="formData.education" name="education" placeholder="Select an option" data-vv-as="education" >
+                <option value="">Select an option</option>
+                <option value="Illiterate">Illiterate</option>
+                <option value="Primary school">Primary school</option>
+                <option value="Lower secondary school">Lower secondary school</option>
+                <option value="Upper secondary school/vocational school">Upper secondary school/vocational school</option>
+                <option value="Bachelor degree">Bachelor degree</option>
+                <option value="Graduate school">Graduate school</option>
+                <option value="ไม่ทราบ">ไม่ทราบ</option>
+            </b-select>
+          </b-field>
+
           <b-field label="Healthcare Scheme"
             :type="{'is-danger': errors.has('healthInsurance')}"
             :message="errors.first('healthInsurance')">
             <b-select v-model="formData.healthInsurance" name="healthInsurance" placeholder="Select an option" v-validate="'required'" data-vv-as="healthcare scheme" >
+                <option value="">Select an option</option>
                 <option value="ชำระเงินเอง">ชำระเงินเอง</option>
                 <option value="ช่วงอายุ 12-59 ปี">ช่วงอายุ 12-59 ปี</option>
                 <option value="ตรวจสุขภาพ">ตรวจสุขภาพ</option>
@@ -287,9 +331,12 @@
             :type="{'is-danger': errors.has('referralStatus')}"
             :message="errors.first('referralStatus')">
             <b-select v-model="formData.referralStatus" name="referralStatus" placeholder="Select an option" v-validate="'required'" data-vv-as="referral status" >
-                <option value="ส่งต่อยังไม่เริ่ม ARV">ส่งต่อยังไม่เริ่ม ARV</option>
-                <option value="ส่งต่อเริ่ม ARV แล้ว">ส่งต่อเริ่ม ARV แล้ว</option>
-                <option value="ผู้ป่วยรับใหม่">ผู้ป่วยรับใหม่</option>
+                <option value="">Select an option</option>
+                <option value="Referred, ART-naïve">Referred, ART-naïve</option>
+                <option value="Referred, currently on ART">Referred, currently on ART</option>
+                <option value="Referred, previously on ART but discontinued">Referred, previously on ART but discontinued</option>
+                <option value="New, ART-naïve">New, ART-naïve</option>
+                <option value="New, previously on PrEP">New, previously on PrEP</option>
                 <option value="ไม่ทราบ">ไม่ทราบ</option>
             </b-select>
           </b-field>
@@ -317,6 +364,7 @@
             :type="{'is-danger': errors.has('patientStatus')}"
             :message="errors.first('patientStatus')">
             <b-select v-model="formData.patientStatus" name="patientStatus" placeholder="Select an option" v-validate="'required'" data-vv-as="patient status" >
+                <option value="">Select an option</option>
                 <option value="เข้ารับการรักษาและรับยาต่อเนื่อง">เข้ารับการรักษาและรับยาต่อเนื่อง</option>
                 <option value="รับยาเท่านั้น">รับยาเท่านั้น</option>
                 <option value="ขาดการติดต่อ">ขาดการติดต่อ</option>
@@ -441,8 +489,22 @@
 
             <div class="field">
               <b-checkbox v-model="formData.riskBehaviors"
-                  native-value="Sharing Sex Toys">
-                  Sharing Sex Toys
+                  native-value="Multiple Parters / Polygamy">
+                  Multiple Parters / Polygamy
+              </b-checkbox>
+            </div>
+
+            <div class="field">
+              <b-checkbox v-model="formData.riskBehaviors"
+                  native-value="Sex Worker">
+                  Sex Worker
+              </b-checkbox>
+            </div>
+
+            <div class="field">
+              <b-checkbox v-model="formData.riskBehaviors"
+                  native-value="Mother-to-Child Transmission / Breastfeeding">
+                  Mother-to-Child Transmission / Breastfeeding
               </b-checkbox>
             </div>
           </div>

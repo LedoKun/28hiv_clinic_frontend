@@ -20,7 +20,8 @@
       <li><a>Users</a></li>
     </ul>
 
-    <p class="menu-label">
+    <!-- TODO: previously edited patients -->
+    <!-- <p class="menu-label">
       Patients
     </p>
     <div v-for="(item, key) in savedPatients" :key="key">
@@ -29,18 +30,18 @@
         :clinicID="item.clinicID"
         :id="item.id"
       />
-    </div>
+    </div> -->
 
 </aside>
 </template>
 
 <script>
-import SavedPatientMenu from '@/components/layout/SavedPatientMenu'
+// import SavedPatientMenu from '@/components/layout/SavedPatientMenu'
 
 export default {
   name: 'sidebar',
   components: {
-    SavedPatientMenu
+    // SavedPatientMenu
   },
   data: function () {
     return {
