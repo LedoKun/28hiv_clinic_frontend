@@ -87,6 +87,10 @@
                       {{ props.row.healthInsurance }}
                     </b-table-column>
 
+                    <b-table-column field="phoneNumbers" label="Phone Numbers">
+                      <span v-html="arrayToBr(props.row.phoneNumbers)"></span>
+                    </b-table-column>
+
                     <b-table-column field="id">
                       <a @click="goToPatient(props.row.id)">
                         <b-icon icon="open-in-new" size="is-small"/>
@@ -138,6 +142,9 @@ export default {
       } finally {
         self.isFetching = false
       }
+    },
+    arrayToBr (arrayObj) {
+      return arrayObj.join('<br />')
     }
   },
   created () {

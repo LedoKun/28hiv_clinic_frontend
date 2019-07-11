@@ -367,6 +367,7 @@
                 <option value="">Select an option</option>
                 <option value="เข้ารับการรักษาและรับยาต่อเนื่อง">เข้ารับการรักษาและรับยาต่อเนื่อง</option>
                 <option value="รับยาเท่านั้น">รับยาเท่านั้น</option>
+                <option value="หยุดยา ARV">หยุดยา ARV</option>
                 <option value="ขาดการติดต่อ">ขาดการติดต่อ</option>
                 <option value="ถูกส่งกลับประเทศ">ถูกส่งกลับประเทศ</option>
                 <option value="ส่งต่อไปรับยาที่สถานพยาบาลในต่างประเทศ">ส่งต่อไปรับยาที่สถานพยาบาลในต่างประเทศ</option>
