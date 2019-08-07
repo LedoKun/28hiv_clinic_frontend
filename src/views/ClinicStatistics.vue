@@ -212,7 +212,7 @@
 
     <div
       class="columns"
-      v-if="tablesData.patientAgeInitDx"
+      v-if="tablesData.patienOtherDx"
     >
       <div class="column">
         <p class="title is-6">Initial Diagnosis</p>
@@ -220,7 +220,7 @@
         <div class="table-wrapper">
           <table
             class="table is-striped is-narrow is-hoverable is-fullwidth"
-            v-html="tablesData.patientAgeInitDx">
+            v-html="tablesData.patienOtherDx">
           </table>
         </div>
       </div>
